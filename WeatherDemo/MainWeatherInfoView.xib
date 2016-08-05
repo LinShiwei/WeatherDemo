@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9531" systemVersion="15F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB" customClass="MainWeatherInfoView" customModule="WeatherDemo" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="CityName" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FEY-cH-BfK">
+                    <rect key="frame" x="434" y="8" width="158" height="43"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="36"/>
+                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="cloud" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="w4o-ZF-ihM">
+                    <rect key="frame" x="549" y="110" width="43" height="21"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Degree" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1pQ-GY-XzZ">
+                    <rect key="frame" x="476" y="59" width="116" height="43"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="36"/>
+                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Date" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Vgg-fa-69J">
+                    <rect key="frame" x="556" y="139" width="36" height="21"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
+            </subviews>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstItem="FEY-cH-BfK" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="8" id="6O7-RP-UNN"/>
+                <constraint firstAttribute="trailing" secondItem="FEY-cH-BfK" secondAttribute="trailing" constant="8" id="Bpq-Lp-ugZ"/>
+                <constraint firstItem="1pQ-GY-XzZ" firstAttribute="top" secondItem="FEY-cH-BfK" secondAttribute="bottom" constant="8" id="Cy6-cl-2ss"/>
+                <constraint firstAttribute="trailing" secondItem="w4o-ZF-ihM" secondAttribute="trailing" constant="8" id="PDt-Wq-oIh"/>
+                <constraint firstAttribute="trailing" secondItem="Vgg-fa-69J" secondAttribute="trailing" constant="8" id="Z7Q-3B-tp3"/>
+                <constraint firstItem="w4o-ZF-ihM" firstAttribute="top" secondItem="1pQ-GY-XzZ" secondAttribute="bottom" constant="8" id="aS8-uN-T8E"/>
+                <constraint firstAttribute="trailing" secondItem="1pQ-GY-XzZ" secondAttribute="trailing" constant="8" id="f5G-sK-hZf"/>
+                <constraint firstItem="Vgg-fa-69J" firstAttribute="top" secondItem="w4o-ZF-ihM" secondAttribute="bottom" constant="8" id="lqW-QF-0Ed"/>
+            </constraints>
+            <connections>
+                <outlet property="cityName" destination="FEY-cH-BfK" id="dB0-Mb-7gG"/>
+                <outlet property="cloud" destination="w4o-ZF-ihM" id="7Vv-OP-hhX"/>
+                <outlet property="date" destination="Vgg-fa-69J" id="etM-xl-Cvl"/>
+                <outlet property="degree" destination="1pQ-GY-XzZ" id="R2K-8M-diU"/>
+            </connections>
+        </view>
+    </objects>
+</document>
