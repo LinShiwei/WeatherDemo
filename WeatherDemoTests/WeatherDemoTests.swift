@@ -11,9 +11,13 @@ import XCTest
 
 class WeatherDemoTests: XCTestCase {
     
+    
+    var fiveDayInfoView : FiveDayInfoView?
+    
     override func setUp() {
         super.setUp()
-        // Put setup code here. This method is called before the invocation of each test method in the class.
+        fiveDayInfoView = NSBundle.mainBundle().loadNibNamed("FiveDayInfoView", owner: self, options: nil).first as? FiveDayInfoView
+        
     }
     
     override func tearDown() {
@@ -21,9 +25,18 @@ class WeatherDemoTests: XCTestCase {
         super.tearDown()
     }
     
-    func testExample() {
-        // This is an example of a functional test case.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
+    func testFiveDayInfoView() {
+        XCTAssertNotNil(fiveDayInfoView)
+        XCTAssertEqual(fiveDayInfoView!.days.count, 5, "days.count NotEqual 5")
+        XCTAssertFalse(fiveDayInfoView!.autoresizesSubviews)
+        var dayNumberSum = 0
+        for cell in fiveDayInfoView!.days {
+            dayNumberSum += cell.dayNumber
+            XCTAssertEqual(cell.frame.size, dayInfoViewCellSize, "dayCellSize is not correct")
+            print(cell.frame)
+        }
+        XCTAssertEqual(dayNumberSum, 10, "Summary of dayNumbers is not 10")
+        
     }
     
     func testPerformanceExample() {

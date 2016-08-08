@@ -13,6 +13,7 @@ import SwiftyJSON
 class ViewController: UIViewController {
 
     @IBOutlet weak var cityWeatherView: CityWeatherView!
+    @IBOutlet weak var cityListTable: UITableView!
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -25,10 +26,20 @@ class ViewController: UIViewController {
             }
         }).onSuccess { [unowned self] jsonObject in
             self.cityWeatherView.weatherJsonData = JSON(jsonObject.dictionary)
-            print(self.cityWeatherView.weatherJsonData)
         }
         
-        print(url)
+        let url5Day = fiveDayWeatherDataByName + "London" + APPID
+        let cache5Day = Shared.JSONCache
+//        cache.removeAll()
+        cache5Day.fetch(URL: NSURL(string: url5Day)!,failure:{ _ in
+            dispatch_async(dispatch_get_main_queue()) {
+                print("fail to fetch data")
+            }
+        }).onSuccess { [unowned self] jsonObject in
+            self.cityWeatherView.fiveDayJsonData = JSON(jsonObject.dictionary)
+        }
+        
+        
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -38,7 +49,24 @@ class ViewController: UIViewController {
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
     }
+}
 
+extension ViewController:UITableViewDataSource{
+    
+    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCellWithIdentifier("CityListTableCell", forIndexPath: indexPath)
+        
+        return cell
 
+    }
+    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+
+        return 5
+    }
+
+}
+
+extension ViewController:UITableViewDelegate {
+    
 }
 

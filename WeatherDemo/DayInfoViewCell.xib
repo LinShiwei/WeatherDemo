@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9531" systemVersion="15F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB" customClass="DayInfoViewCell" customModule="WeatherDemo" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Day" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1cL-X9-rre">
+                    <rect key="frame" x="276" y="8" width="49" height="34"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="28"/>
+                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Degree" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="axC-L4-ljh">
+                    <rect key="frame" x="255" y="50" width="90" height="34"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="28"/>
+                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="description" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iuA-V6-8Ya">
+                    <rect key="frame" x="240" y="92" width="120" height="29"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="24"/>
+                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
+            </subviews>
+            <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstItem="iuA-V6-8Ya" firstAttribute="top" secondItem="axC-L4-ljh" secondAttribute="bottom" constant="8" id="1Cw-2k-8fV"/>
+                <constraint firstItem="iuA-V6-8Ya" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="6mN-4f-PYA"/>
+                <constraint firstItem="1cL-X9-rre" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="8" id="9cA-fF-5w2"/>
+                <constraint firstItem="1cL-X9-rre" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="MRV-St-ejn"/>
+                <constraint firstItem="axC-L4-ljh" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="MpY-UN-Ar4"/>
+                <constraint firstItem="axC-L4-ljh" firstAttribute="top" secondItem="1cL-X9-rre" secondAttribute="bottom" constant="8" id="WdT-a8-eH7"/>
+            </constraints>
+            <connections>
+                <outlet property="dayLabel" destination="1cL-X9-rre" id="i9I-9p-y4B"/>
+                <outlet property="temperatureLabel" destination="axC-L4-ljh" id="YpH-ij-XNp"/>
+                <outlet property="weatherDescriptionLabel" destination="iuA-V6-8Ya" id="ZvN-Df-To5"/>
+            </connections>
+        </view>
+    </objects>
+</document>
