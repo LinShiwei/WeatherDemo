@@ -25,10 +25,7 @@ class CityWeatherView: UIView {
         didSet{
             guard let data = weatherJsonData else {return}
             if let name = data["name"].string {
-                guard cityName == ""||cityName == name else {return}
-                if cityName == "" {
-                    cityName = name
-                }
+                cityName = name
             }else{
                 print("[lsw] failed to get name data from json")
             }
@@ -56,15 +53,7 @@ class CityWeatherView: UIView {
     var fiveDayJsonData : JSON? {
         didSet{
             guard let data = fiveDayJsonData else {return}
-            if let name = data["city"]["name"].string {
-                guard cityName == ""||cityName == name else {return}
-                if cityName == "" {
-                    cityName = name
-                }
-            }else{
-                print("[lsw] failed to get name data from json")
-            }
-            
+
             if let list = data["list"].array {
                 assert(4*8...5*8 ~= list.count)
                 for dayNumber in 0...4 {

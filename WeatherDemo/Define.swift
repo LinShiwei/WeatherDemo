@@ -9,12 +9,14 @@
 import Foundation
 import UIKit
 //MARK: APP constant setting
+let windowBounds = UIScreen.mainScreen().bounds
 
 let dayInfoViewCellSize = CGSize(width: 200, height: 200)
 
 //MARK: OpenWeatherMap API
 
 let APPID = "&APPID=91d32f2d41f0656d8c13bba6f2c1aaed"
+//let APPID = "&lang=zh_cn&APPID=91d32f2d41f0656d8c13bba6f2c1aaed"
 let currentWeatherDataByName = "http://api.openweathermap.org/data/2.5/weather?q="
 let fiveDayWeatherDataByName = "http://api.openweathermap.org/data/2.5/forecast?q="
 /*
