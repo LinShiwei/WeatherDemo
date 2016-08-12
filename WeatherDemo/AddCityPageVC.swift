@@ -12,11 +12,13 @@ import SwiftyJSON
 class AddCityPageVC: UIViewController {
 
     var cities = [String]()
+    var filteredCities = [String]()
+    
     var senderView : UITableViewCell
     let maskView = UIView()
     
-//    let searchTableView = UITableView()
-    let searchController = UISearchController(searchResultsController: UITableViewController())
+    let searchTableView = UITableView()
+    let searchController = UISearchController(searchResultsController: nil)
     
     var rootViewController: UIViewController!
 
@@ -40,25 +42,22 @@ class AddCityPageVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-//        searchTableView.registerNib(UINib(nibName: "SearchCityTableViewCell", bundle: nil), forCellReuseIdentifier: "SearchCityCell")
-//        searchTableView.frame = CGRect(x: 200, y: 100, width: 400, height: 500)
-//        searchTableView.tableHeaderView = searchController.searchBar
-//        searchTableView.delegate = self
-//        searchTableView.dataSource  = self
-//        searchTableView.backgroundColor = UIColor.redColor()
-//        view.addSubview(searchTableView)
-//        
+        searchTableView.registerNib(UINib(nibName: "SearchCityTableViewCell", bundle: nil), forCellReuseIdentifier: "SearchCityCell")
+        searchTableView.frame = CGRect(x: 200, y: 100, width: 400, height: 500)
+        searchTableView.tableHeaderView = searchController.searchBar
+        searchTableView.delegate = self
+        searchTableView.dataSource  = self
+        searchTableView.backgroundColor = UIColor.redColor()
+        view.addSubview(searchTableView)
+        
         searchController.searchResultsUpdater = self
         searchController.searchBar.delegate = self
+
+        initCitiesFromJSON()
         
-        if let controller = searchController.searchResultsController as? UITableViewController, let table = controller.tableView{
-            table.delegate = self
-            table.dataSource = self
-            table.registerNib(UINib(nibName: "SearchCityTableViewCell", bundle: nil), forCellReuseIdentifier: "SearchCityCell")
-            table.backgroundColor = UIColor.redColor()
-        }
-        
-//        initCitiesFromJSON()
+        print("count")
+        print(searchTableView.numberOfRowsInSection(0))
+        print(cities.count)
     }
     
     override func loadView() {
@@ -104,10 +103,19 @@ class AddCityPageVC: UIViewController {
     private func initCitiesFromJSON(){
         if let path = NSBundle.mainBundle().pathForResource("city.list", ofType: "json"),let stringData = try? String(contentsOfFile: path, usedEncoding: nil){
             let lines = stringData.componentsSeparatedByString("\n")
-            if let dataFromString = lines[0].dataUsingEncoding(NSUTF8StringEncoding, allowLossyConversion: false),let cityName = JSON(data:dataFromString)["name"].string{
+            for line in lines[0...5] {
+                if let dataFromString = line.dataUsingEncoding(NSUTF8StringEncoding, allowLossyConversion: false),let cityName = JSON(data:dataFromString)["name"].string{
                     cities.append(cityName)
+                }
             }
         }
+    }
+    
+    private func filterContentForSearchText(searchText: String){
+        filteredCities = cities.filter({ ( city : String)-> Bool in
+            return city.lowercaseString.containsString(searchText.lowercaseString)
+        })
+        searchTableView.reloadData()
     }
 }
 
@@ -117,12 +125,20 @@ extension AddCityPageVC : UITableViewDelegate {
 
 extension AddCityPageVC : UITableViewDataSource {
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 2
+        if searchController.active && searchController.searchBar.text != "" {
+            return filteredCities.count
+        }else{
+            return cities.count
+        }
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("SearchCityCell", forIndexPath: indexPath)
-        
+        let cell = tableView.dequeueReusableCellWithIdentifier("SearchCityCell", forIndexPath: indexPath) as! SearchCityTableViewCell
+        if searchController.active && searchController.searchBar.text != "" {
+            cell.cityNameLabel.text = filteredCities[indexPath.row]
+        }else{
+            cell.cityNameLabel.text = cities[indexPath.row]
+        }
         return cell
     }
 }
@@ -133,8 +149,6 @@ extension AddCityPageVC : UISearchBarDelegate {
 
 extension AddCityPageVC : UISearchResultsUpdating {
     func updateSearchResultsForSearchController(searchController: UISearchController) {
-//        let searchBar = searchController.searchBar
-//        let scope = searchBar.scopeButtonTitles![searchBar.selectedScopeButtonIndex]
-//        filterContentForSearchText(searchController.searchBar.text!, scope: scope)
+        filterContentForSearchText(searchController.searchBar.text!)
     }
 }
