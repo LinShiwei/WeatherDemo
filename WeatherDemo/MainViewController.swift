@@ -12,10 +12,15 @@ import SwiftyJSON
 
 class MainViewController: UIViewController {
 
+    
+    var citiesInTable = [String]()
+    
     @IBOutlet weak var cityWeatherView: CityWeatherView!
     @IBOutlet weak var cityListTable: UITableView!
     override func viewDidLoad() {
         super.viewDidLoad()
+        let defaults = NSUserDefaults.standardUserDefaults()
+        citiesInTable = defaults.objectForKey("cities") as? [String] ?? ["London","Quanzhou"]
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -65,14 +70,11 @@ extension MainViewController:UITableViewDataSource{
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("CityListTableCell", forIndexPath: indexPath) as! CityListTableCell
         
-        if indexPath.row == 0{
-            cell.nameLabel.text = "Quanzhou"
+        
+        if indexPath.row == tableView.numberOfRowsInSection(0) - 1{
+            cell.nameLabel.text = "+"
         }else{
-            if indexPath.row == 1 {
-                cell.nameLabel.text = "London"
-            }else{
-                cell.nameLabel.text = "+"
-            }
+            cell.nameLabel.text = citiesInTable[indexPath.row]
         }
         
         return cell
@@ -80,7 +82,7 @@ extension MainViewController:UITableViewDataSource{
     }
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
 
-        return 3
+        return citiesInTable.count + 1
     }
 
 }

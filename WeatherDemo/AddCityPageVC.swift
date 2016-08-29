@@ -55,9 +55,6 @@ class AddCityPageVC: UIViewController {
 
         initCitiesFromJSON()
         
-        print("count")
-        print(searchTableView.numberOfRowsInSection(0))
-        print(cities.count)
     }
     
     override func loadView() {
@@ -65,7 +62,7 @@ class AddCityPageVC: UIViewController {
         
         maskView.frame = windowBounds
         maskView.alpha = 0.5
-        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: "tapToReturn:")
+        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(AddCityPageVC.tapToReturn(_:)))
         maskView.addGestureRecognizer(tapGestureRecognizer)
         view.insertSubview(maskView, atIndex: 0)
         
@@ -101,7 +98,7 @@ class AddCityPageVC: UIViewController {
     }
     
     private func initCitiesFromJSON(){
-        if let path = NSBundle.mainBundle().pathForResource("city.list", ofType: "json"),let stringData = try? String(contentsOfFile: path, usedEncoding: nil){
+        if let path = NSBundle.mainBundle().pathForResource("CN_city", ofType: "txt"),let stringData = try? String(contentsOfFile: path, usedEncoding: nil){
             let lines = stringData.componentsSeparatedByString("\n")
             for line in lines[0...5] {
                 if let dataFromString = line.dataUsingEncoding(NSUTF8StringEncoding, allowLossyConversion: false),let cityName = JSON(data:dataFromString)["name"].string{
@@ -120,7 +117,13 @@ class AddCityPageVC: UIViewController {
 }
 
 extension AddCityPageVC : UITableViewDelegate {
-    
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        guard let controller = rootViewController as? MainViewController else { return }
+//        controller.
+        let cellCount = controller.cityListTable.numberOfRowsInSection(0)
+        print(cellCount)
+        controller.cityListTable.insertRowsAtIndexPaths([NSIndexPath(forRow: cellCount-1, inSection: 0)], withRowAnimation: .Automatic)
+    }
 }
 
 extension AddCityPageVC : UITableViewDataSource {

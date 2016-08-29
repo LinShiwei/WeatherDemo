@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		560B194A1D743DA000494244 /* CN_city.txt in Resources */ = {isa = PBXBuildFile; fileRef = 560B19491D743DA000494244 /* CN_city.txt */; };
 		560BE8C51D5879C90012975E /* CityListTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 560BE8C41D5879C90012975E /* CityListTableCell.swift */; };
 		560DB3CB1D54758B00771B92 /* MainWeatherInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 560DB3CA1D54758B00771B92 /* MainWeatherInfoView.swift */; };
 		561E13131D55CC1900718A9B /* FiveDayInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 561E13121D55CC1900718A9B /* FiveDayInfoView.swift */; };
@@ -41,6 +42,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		560B19491D743DA000494244 /* CN_city.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = CN_city.txt; sourceTree = "<group>"; };
 		560BE8C41D5879C90012975E /* CityListTableCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CityListTableCell.swift; sourceTree = "<group>"; };
 		560DB3CA1D54758B00771B92 /* MainWeatherInfoView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainWeatherInfoView.swift; sourceTree = "<group>"; };
 		561E13121D55CC1900718A9B /* FiveDayInfoView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FiveDayInfoView.swift; sourceTree = "<group>"; };
@@ -156,6 +158,7 @@
 		56F75D061D533C8200A6B0F9 /* Support */ = {
 			isa = PBXGroup;
 			children = (
+				560B19491D743DA000494244 /* CN_city.txt */,
 				56F75CE11D52ED8E00A6B0F9 /* Main.storyboard */,
 				56F75D021D53187600A6B0F9 /* Define.swift */,
 				5632548E1D598AB200B45FDD /* city.list.json */,
@@ -251,6 +254,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				560B194A1D743DA000494244 /* CN_city.txt in Resources */,
 				5696E23B1D5476B00015CD29 /* MainWeatherInfoView.xib in Resources */,
 				56F75CE81D52ED8E00A6B0F9 /* LaunchScreen.storyboard in Resources */,
 				56F75CE51D52ED8E00A6B0F9 /* Assets.xcassets in Resources */,
