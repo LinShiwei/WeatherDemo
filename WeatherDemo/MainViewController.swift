@@ -13,13 +13,19 @@ import SwiftyJSON
 class MainViewController: UIViewController {
 
     
-    var citiesInTable = [String]()
+    var citiesInTable = [String](){
+        didSet{
+            let defaults = NSUserDefaults.standardUserDefaults()
+            defaults.setObject(citiesInTable, forKey: "cities")
+        }
+    }
     
     @IBOutlet weak var cityWeatherView: CityWeatherView!
     @IBOutlet weak var cityListTable: UITableView!
     override func viewDidLoad() {
         super.viewDidLoad()
         let defaults = NSUserDefaults.standardUserDefaults()
+        
         citiesInTable = defaults.objectForKey("cities") as? [String] ?? ["London","Quanzhou"]
     }
     
@@ -106,6 +112,34 @@ extension MainViewController:UITableViewDelegate {
                 addCityPage.presentFromRootViewController()
             }
         }
+    }
+    
+    func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
+        return true
+    }
+    
+    func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
+        if editingStyle == .Delete {
+            citiesInTable.removeAtIndex(indexPath.row)
+            tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
+            tableView.reloadData()V
+        } else if editingStyle == .Insert {
+            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
+        }
+    }
+}
+
+extension MainViewController: SelectCityForAddingDelegate{
+    func selectedCityName(cityName cityName:String){
+//        let count = cityListTable.numberOfRowsInSection(0)
+//        cityListTable.insertRowsAtIndexPaths([NSIndexPath(forRow: count,inSection: 0)], withRowAnimation: <#T##UITableViewRowAnimation#>)
+        for name in citiesInTable {
+            if cityName == name {
+                return
+            }
+        }
+        citiesInTable.append(cityName)
+        cityListTable.reloadData()
     }
 }
 

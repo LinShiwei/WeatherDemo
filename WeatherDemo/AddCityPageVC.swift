@@ -9,6 +9,10 @@
 import UIKit
 import SwiftyJSON
 
+protocol SelectCityForAddingDelegate: class {
+    func selectedCityName(cityName _:String)
+}
+
 class AddCityPageVC: UIViewController {
 
     var cities = [String]()
@@ -22,10 +26,18 @@ class AddCityPageVC: UIViewController {
     
     var rootViewController: UIViewController!
 
+    var delegate : SelectCityForAddingDelegate?
+    
     init(senderView : UITableViewCell,backgroundColor:UIColor){
         self.senderView = senderView
         self.maskView.backgroundColor = backgroundColor
         rootViewController = UIApplication.sharedApplication().keyWindow!.rootViewController!
+        
+        if let controller = rootViewController as? MainViewController{
+            delegate = controller
+        }else{
+            print("fater error : AddCityPageVC's rootViewController is not MainViewController")
+        }
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -52,7 +64,8 @@ class AddCityPageVC: UIViewController {
         
         searchController.searchResultsUpdater = self
         searchController.searchBar.delegate = self
-
+        searchController.dimsBackgroundDuringPresentation = false
+        
         initCitiesFromJSON()
         
     }
@@ -98,9 +111,9 @@ class AddCityPageVC: UIViewController {
     }
     
     private func initCitiesFromJSON(){
-        if let path = NSBundle.mainBundle().pathForResource("CN_city", ofType: "txt"),let stringData = try? String(contentsOfFile: path, usedEncoding: nil){
+        if let path = NSBundle.mainBundle().pathForResource("CN_city_sorted", ofType: "txt"),let stringData = try? String(contentsOfFile: path, usedEncoding: nil){
             let lines = stringData.componentsSeparatedByString("\n")
-            for line in lines[0...5] {
+            for line in lines {
                 if let dataFromString = line.dataUsingEncoding(NSUTF8StringEncoding, allowLossyConversion: false),let cityName = JSON(data:dataFromString)["name"].string{
                     cities.append(cityName)
                 }
@@ -118,12 +131,15 @@ class AddCityPageVC: UIViewController {
 
 extension AddCityPageVC : UITableViewDelegate {
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        guard let controller = rootViewController as? MainViewController else { return }
-//        controller.
-        let cellCount = controller.cityListTable.numberOfRowsInSection(0)
-        print(cellCount)
-        controller.cityListTable.insertRowsAtIndexPaths([NSIndexPath(forRow: cellCount-1, inSection: 0)], withRowAnimation: .Automatic)
+        guard rootViewController is MainViewController else { return }
+//        let cellCount = controller.cityListTable.numberOfRowsInSection(0)
+//        print(cellCount)
+//        controller.cityListTable.insertRowsAtIndexPaths([NSIndexPath(forRow: cellCount-1, inSection: 0)], withRowAnimation: .Automatic)
+        if let cell = tableView.cellForRowAtIndexPath(indexPath) as? SearchCityTableViewCell {
+            delegate?.selectedCityName(cityName: cell.cityNameLabel.text!)
+        }
     }
+    
 }
 
 extension AddCityPageVC : UITableViewDataSource {
