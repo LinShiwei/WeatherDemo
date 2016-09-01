@@ -62,10 +62,10 @@ class AddCityPageVC: UIViewController {
         searchTableView.backgroundColor = UIColor.redColor()
         view.addSubview(searchTableView)
         
+        searchController.delegate = self
         searchController.searchResultsUpdater = self
         searchController.searchBar.delegate = self
         searchController.dimsBackgroundDuringPresentation = false
-        
         initCitiesFromJSON()
         
     }
@@ -88,12 +88,14 @@ class AddCityPageVC: UIViewController {
         
         UIView.animateWithDuration(0.4, delay: 0.03, options: [UIViewAnimationOptions.BeginFromCurrentState, UIViewAnimationOptions.CurveEaseInOut], animations: {[unowned self]() -> Void in
            
-            }, completion: nil)
+            }, completion: {[unowned self](finished) in
+                self.searchController.active = true
+        })
         
     }
     
     private func dismissViewController() {
-   
+        searchController.active = false
         dispatch_async(dispatch_get_main_queue(), {
             UIView.animateWithDuration(0.1){[unowned self]() in
             }
@@ -132,14 +134,11 @@ class AddCityPageVC: UIViewController {
 extension AddCityPageVC : UITableViewDelegate {
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         guard rootViewController is MainViewController else { return }
-//        let cellCount = controller.cityListTable.numberOfRowsInSection(0)
-//        print(cellCount)
-//        controller.cityListTable.insertRowsAtIndexPaths([NSIndexPath(forRow: cellCount-1, inSection: 0)], withRowAnimation: .Automatic)
+
         if let cell = tableView.cellForRowAtIndexPath(indexPath) as? SearchCityTableViewCell {
             delegate?.selectedCityName(cityName: cell.cityNameLabel.text!)
         }
     }
-    
 }
 
 extension AddCityPageVC : UITableViewDataSource {
@@ -169,5 +168,11 @@ extension AddCityPageVC : UISearchBarDelegate {
 extension AddCityPageVC : UISearchResultsUpdating {
     func updateSearchResultsForSearchController(searchController: UISearchController) {
         filterContentForSearchText(searchController.searchBar.text!)
+    }
+}
+
+extension AddCityPageVC : UISearchControllerDelegate {
+    func didPresentSearchController(searchController: UISearchController) {
+        searchController.searchBar.becomeFirstResponder()
     }
 }
