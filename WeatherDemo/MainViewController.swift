@@ -78,8 +78,8 @@ extension MainViewController:UITableViewDataSource{
         }else{
             cell.nameLabel.text = citiesInTable[indexPath.row]
         }
+        
         return cell
-
     }
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
 
@@ -93,15 +93,20 @@ extension MainViewController:UITableViewDelegate {
         return 100
     }
 
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        if indexPath.row == tableView.numberOfRowsInSection(0) - 1{
+    func tableView(tableView: UITableView, willSelectRowAtIndexPath indexPath: NSIndexPath) -> NSIndexPath? {
+        if indexPath.row == tableView.numberOfRowsInSection(0) - 1 {
             let addCityPage = AddCityPageVC(senderView: cityListTable.cellForRowAtIndexPath(indexPath)!, backgroundColor: UIColor.blueColor())
             addCityPage.presentFromRootViewController()
+            return nil
         }else{
-            fetchDataWithCityName((cityListTable.cellForRowAtIndexPath(indexPath) as! CityListTableCell).nameLabel.text!)
-            print((cityListTable.cellForRowAtIndexPath(indexPath) as! CityListTableCell).nameLabel.text!)
+            return indexPath
         }
+    }
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        guard indexPath.row < tableView.numberOfRowsInSection(0) - 1 else {return}
         
+        fetchDataWithCityName((cityListTable.cellForRowAtIndexPath(indexPath) as! CityListTableCell).nameLabel.text!)
+    
         let cell = tableView.cellForRowAtIndexPath(indexPath) as! CityListTableCell
         UIView.animateWithDuration(0.5, animations: {()-> Void in
             cell.alpha = 1.0
@@ -113,7 +118,6 @@ extension MainViewController:UITableViewDelegate {
         UIView.animateWithDuration(0.5, animations: {()-> Void in
             cell.alpha = 0.5
         })
-
     }
     
     func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
@@ -131,6 +135,12 @@ extension MainViewController:UITableViewDelegate {
     }
     
     func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
+        //set default selection
+        if indexPath.row == 0 && tableView.indexPathForSelectedRow == nil &&  tableView.numberOfRowsInSection(0) > 1{
+            tableView.selectRowAtIndexPath(indexPath, animated: false, scrollPosition: .None)
+            fetchDataWithCityName((cell as! CityListTableCell).nameLabel.text!)
+        }
+        
         if cell.selected {
             cell.alpha = 1.0
         }else{
