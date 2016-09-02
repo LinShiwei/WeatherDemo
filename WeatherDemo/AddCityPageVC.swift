@@ -60,6 +60,7 @@ class AddCityPageVC: UIViewController {
         searchTableView.delegate = self
         searchTableView.dataSource  = self
         searchTableView.backgroundColor = UIColor.redColor()
+        
         view.addSubview(searchTableView)
         
         searchController.delegate = self
@@ -138,6 +139,7 @@ extension AddCityPageVC : UITableViewDelegate {
         if let cell = tableView.cellForRowAtIndexPath(indexPath) as? SearchCityTableViewCell {
             delegate?.selectedCityName(cityName: cell.cityNameLabel.text!)
         }
+        print("sellect")
     }
 }
 

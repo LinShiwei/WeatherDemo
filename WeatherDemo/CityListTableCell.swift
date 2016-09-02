@@ -14,7 +14,7 @@ class CityListTableCell: UITableViewCell {
    
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
+        backgroundColor = UIColor(red: 1, green: 1, blue: 1, alpha: 0.5)
     }
 
     override func setSelected(selected: Bool, animated: Bool) {
@@ -22,5 +22,13 @@ class CityListTableCell: UITableViewCell {
 
         // Configure the view for the selected state
     }
-
+  
+//    func fadeInAnimation(){
+//        let fadeInAnimation = CABasicAnimation(keyPath: "opacity")
+//        fadeInAnimation.fromValue = 0.5
+//        fadeInAnimation.toValue = 1.0
+//        fadeInAnimation.duration = 0.5
+//
+//        
+//    }
 }

@@ -24,8 +24,8 @@ class MainViewController: UIViewController {
     @IBOutlet weak var cityListTable: UITableView!
     override func viewDidLoad() {
         super.viewDidLoad()
-        let defaults = NSUserDefaults.standardUserDefaults()
         
+        let defaults = NSUserDefaults.standardUserDefaults()
         citiesInTable = defaults.objectForKey("cities") as? [String] ?? ["London","Quanzhou"]
     }
     
@@ -65,10 +65,7 @@ class MainViewController: UIViewController {
         }).onSuccess { [unowned self] jsonObject in
             self.cityWeatherView.fiveDayJsonData = JSON(jsonObject.dictionary)
         }
-        
     }
-    
-    
 }
 
 extension MainViewController:UITableViewDataSource{
@@ -76,13 +73,11 @@ extension MainViewController:UITableViewDataSource{
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("CityListTableCell", forIndexPath: indexPath) as! CityListTableCell
         
-        
         if indexPath.row == tableView.numberOfRowsInSection(0) - 1{
             cell.nameLabel.text = "+"
         }else{
             cell.nameLabel.text = citiesInTable[indexPath.row]
         }
-        
         return cell
 
     }
@@ -97,7 +92,7 @@ extension MainViewController:UITableViewDelegate {
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         return 100
     }
-    
+
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         if indexPath.row == tableView.numberOfRowsInSection(0) - 1{
             let addCityPage = AddCityPageVC(senderView: cityListTable.cellForRowAtIndexPath(indexPath)!, backgroundColor: UIColor.blueColor())
@@ -106,6 +101,19 @@ extension MainViewController:UITableViewDelegate {
             fetchDataWithCityName((cityListTable.cellForRowAtIndexPath(indexPath) as! CityListTableCell).nameLabel.text!)
             print((cityListTable.cellForRowAtIndexPath(indexPath) as! CityListTableCell).nameLabel.text!)
         }
+        
+        let cell = tableView.cellForRowAtIndexPath(indexPath) as! CityListTableCell
+        UIView.animateWithDuration(0.5, animations: {()-> Void in
+            cell.alpha = 1.0
+        })
+    }
+    
+    func tableView(tableView: UITableView, didDeselectRowAtIndexPath indexPath: NSIndexPath) {
+        let cell = tableView.cellForRowAtIndexPath(indexPath) as! CityListTableCell
+        UIView.animateWithDuration(0.5, animations: {()-> Void in
+            cell.alpha = 0.5
+        })
+
     }
     
     func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
@@ -121,12 +129,18 @@ extension MainViewController:UITableViewDelegate {
             // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
         }
     }
+    
+    func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
+        if cell.selected {
+            cell.alpha = 1.0
+        }else{
+            cell.alpha = 0.5
+        }
+    }
 }
 
 extension MainViewController: SelectCityForAddingDelegate{
     func selectedCityName(cityName cityName:String){
-//        let count = cityListTable.numberOfRowsInSection(0)
-//        cityListTable.insertRowsAtIndexPaths([NSIndexPath(forRow: count,inSection: 0)], withRowAnimation: <#T##UITableViewRowAnimation#>)
         for name in citiesInTable {
             if cityName == name {
                 return
