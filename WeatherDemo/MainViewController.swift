@@ -121,7 +121,12 @@ extension MainViewController:UITableViewDelegate {
     }
     
     func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
-        return true
+        
+        if (indexPath == tableView.numberOfRowsInSection(0) - 1) {
+            return false
+        }else{
+            return true
+        }
     }
     
     func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
