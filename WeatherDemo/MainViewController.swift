@@ -21,12 +21,13 @@ class MainViewController: UIViewController {
     }
     
     @IBOutlet weak var cityWeatherView: CityWeatherView!
-    @IBOutlet weak var cityListTable: UITableView!
+    @IBOutlet weak var cityListTable: CityListTableView!
     override func viewDidLoad() {
         super.viewDidLoad()
         
         let defaults = NSUserDefaults.standardUserDefaults()
         citiesInTable = defaults.objectForKey("cities") as? [String] ?? ["London","Quanzhou"]
+               
     }
     
     override func viewWillAppear(animated: Bool) {

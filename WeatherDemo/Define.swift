@@ -13,6 +13,10 @@ let windowBounds = UIScreen.mainScreen().bounds
 
 let dayInfoViewCellSize = CGSize(width: 200, height: 200)
 
+//let cityListTableViewBounds = CGRect(x: 0, y: 0, width: 150, height: 100)
+
+
+
 //MARK: OpenWeatherMap API
 
 let APPID = "&APPID=91d32f2d41f0656d8c13bba6f2c1aaed"

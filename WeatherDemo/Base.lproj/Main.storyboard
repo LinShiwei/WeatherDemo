@@ -22,21 +22,24 @@
                                 <rect key="frame" x="116" y="33" width="600" height="600"/>
                                 <color key="backgroundColor" red="0.26380360310000001" green="0.56889525159999998" blue="0.84266493060000003" alpha="1" colorSpace="calibratedRGB"/>
                             </view>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="fsz-b8-lpa">
-                                <rect key="frame" x="0.0" y="0.0" width="100" height="600"/>
-                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="fsz-b8-lpa" customClass="CityListTableView" customModule="WeatherDemo" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="0.0" width="150" height="600"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
+                                    <constraint firstAttribute="width" constant="150" id="2eh-rn-tNG"/>
                                     <constraint firstAttribute="width" constant="100" id="3GR-BM-lWp"/>
+                                    <constraint firstAttribute="width" constant="100" id="XSp-Aa-wwf"/>
+                                    <constraint firstAttribute="width" constant="100" id="kkM-TV-d93"/>
                                 </constraints>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="CityListTableCell" id="xdP-cH-QWT" customClass="CityListTableCell" customModule="WeatherDemo" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="28" width="100" height="44"/>
+                                        <rect key="frame" x="0.0" y="28" width="150" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="xdP-cH-QWT" id="Gdx-rf-mwH">
-                                            <rect key="frame" x="0.0" y="0.0" width="100" height="43"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="150" height="43"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dvL-lh-wVC">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dvL-lh-wVC">
                                                     <rect key="frame" x="29" y="11" width="42" height="21"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
@@ -53,6 +56,13 @@
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
+                                <variation key="default">
+                                    <mask key="constraints">
+                                        <exclude reference="3GR-BM-lWp"/>
+                                        <exclude reference="XSp-Aa-wwf"/>
+                                        <exclude reference="kkM-TV-d93"/>
+                                    </mask>
+                                </variation>
                                 <connections>
                                     <outlet property="dataSource" destination="BYZ-38-t0r" id="GJt-1A-AUu"/>
                                     <outlet property="delegate" destination="BYZ-38-t0r" id="cdO-0o-AZ0"/>
