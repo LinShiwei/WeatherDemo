@@ -56,25 +56,30 @@ class AddCityPageVC: UIViewController {
         super.viewDidLoad()
         configureSearchController()
         
+        configureSearchTableView()
+        
+        initCitiesFromJSON()
+    }
+    
+    private func configureSearchTableView(){
         searchTableView.registerNib(UINib(nibName: "SearchCityTableViewCell", bundle: nil), forCellReuseIdentifier: "SearchCityCell")
-        searchTableView.frame = CGRect(x: 200, y: 100, width: 400, height: 500)
+        searchTableView.frame = CGRect(x: 200, y: 144, width: 400, height: 500)
         searchTableView.delegate = self
         searchTableView.dataSource  = self
         searchTableView.backgroundColor = UIColor.redColor()
         
         view.addSubview(searchTableView)
-        
-        initCitiesFromJSON()
     }
     
     private func configureSearchController(){
-        let barFrame = CGRect(x: 0, y: 0, width: 400, height: 44)
+        let barFrame = CGRect(x: 200, y: 100, width: 400, height: 44)
         searchController = CitySearchController(searchResultsController: nil,searchBarFrame: barFrame, searchBarTintColor: UIColor.purpleColor())
         //        searchController.searchBar.sizeToFit()
         searchController.dimsBackgroundDuringPresentation = false
         searchController.searchDelegate = self
-        searchTableView.tableHeaderView = searchController.citySearchBar
-        
+       
+        view.addSubview(searchController.citySearchBar)
+       
     }
     override func loadView() {
         super.loadView()
