@@ -24,7 +24,7 @@ class AddCityPageVC: UIViewController {
     let searchTableView = UITableView()
     var searchController : CitySearchController!
     
-    var rootViewController: UIViewController!
+    var rootViewController : UIViewController!
 
     var delegate : SelectCityForAddingDelegate?
     
@@ -63,7 +63,7 @@ class AddCityPageVC: UIViewController {
     
     private func configureSearchTableView(){
         searchTableView.registerNib(UINib(nibName: "SearchCityTableViewCell", bundle: nil), forCellReuseIdentifier: "SearchCityCell")
-        searchTableView.frame = CGRect(x: 200, y: 144, width: 400, height: 500)
+        searchTableView.frame = searchTableViewFrame
         searchTableView.delegate = self
         searchTableView.dataSource  = self
         searchTableView.backgroundColor = UIColor.redColor()
@@ -72,8 +72,7 @@ class AddCityPageVC: UIViewController {
     }
     
     private func configureSearchController(){
-        let barFrame = CGRect(x: 200, y: 100, width: 400, height: 44)
-        searchController = CitySearchController(searchResultsController: nil,searchBarFrame: barFrame, searchBarTintColor: UIColor.purpleColor())
+        searchController = CitySearchController(searchResultsController: nil,searchBarFrame: searchControllerFrame, searchBarTintColor: UIColor.purpleColor())
         //        searchController.searchBar.sizeToFit()
         searchController.dimsBackgroundDuringPresentation = false
         searchController.searchDelegate = self

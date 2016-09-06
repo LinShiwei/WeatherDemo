@@ -16,7 +16,9 @@ class FiveDayInfoView: UIView {
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
-        frame = CGRect(x: 0, y: 200, width: dayInfoViewCellSize.width*CGFloat(dayCount), height: dayInfoViewCellSize.height)
+    
+        frame = CGRect(x: cityListTableViewWidth, y: windowBounds.height - dayInfoViewCellSize.height, width: dayInfoViewCellSize.width*CGFloat(dayCount), height: dayInfoViewCellSize.height)
+
         
         for day in 0...dayCount - 1 {
             guard let viewFromNib = NSBundle.mainBundle().loadNibNamed("DayInfoViewCell", owner: self, options: nil).first as? DayInfoViewCell else {return}

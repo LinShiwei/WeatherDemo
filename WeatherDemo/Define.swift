@@ -11,11 +11,19 @@ import UIKit
 //MARK: APP constant setting
 let windowBounds = UIScreen.mainScreen().bounds
 
-let dayInfoViewCellSize = CGSize(width: 200, height: 200)
 
-//let cityListTableViewBounds = CGRect(x: 0, y: 0, width: 150, height: 100)
+let cityListTableViewWidth : CGFloat = 150 //This property MUST set in Main.stroyboard
 
+let cityListTableViewHeight : CGFloat = 100
 
+let dayInfoViewCellSize = CGSize(width: (windowBounds.width - cityListTableViewWidth)/5.0, height: 200)
+
+//MARK: AddCityPageVC constant
+let searchControllerWidth : CGFloat = 400
+let searchControllerFrame = CGRect(x: (windowBounds.width - searchControllerWidth)/2, y: 100, width: searchControllerWidth, height: 44)
+
+let searchTableViewWidth : CGFloat = 400
+let searchTableViewFrame = CGRect(x: (windowBounds.width - searchControllerWidth)/2, y: 100 + searchControllerFrame.height, width: searchTableViewWidth, height: 500)
 
 //MARK: OpenWeatherMap API
 

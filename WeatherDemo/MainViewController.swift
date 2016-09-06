@@ -91,12 +91,12 @@ extension MainViewController:UITableViewDataSource{
 
 extension MainViewController:UITableViewDelegate {
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
-        return 100
+        return cityListTableViewHeight
     }
 
     func tableView(tableView: UITableView, willSelectRowAtIndexPath indexPath: NSIndexPath) -> NSIndexPath? {
         if indexPath.row == tableView.numberOfRowsInSection(0) - 1 {
-            let addCityPage = AddCityPageVC(senderView: cityListTable.cellForRowAtIndexPath(indexPath)!, backgroundColor: UIColor.blueColor())
+            let addCityPage = AddCityPageVC(senderView: cityListTable.cellForRowAtIndexPath(indexPath)!, backgroundColor: UIColor.whiteColor())
             addCityPage.presentFromRootViewController()
             return nil
         }else{
