@@ -22,7 +22,7 @@ class AddCityPageVC: UIViewController {
     let maskView = UIView()
     
     let searchTableView = UITableView()
-    let searchController = UISearchController(searchResultsController: nil)
+    var searchController : CitySearchController!
     
     var rootViewController: UIViewController!
 
@@ -54,23 +54,28 @@ class AddCityPageVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        configureSearchController()
+        
         searchTableView.registerNib(UINib(nibName: "SearchCityTableViewCell", bundle: nil), forCellReuseIdentifier: "SearchCityCell")
         searchTableView.frame = CGRect(x: 200, y: 100, width: 400, height: 500)
-        searchTableView.tableHeaderView = searchController.searchBar
         searchTableView.delegate = self
         searchTableView.dataSource  = self
         searchTableView.backgroundColor = UIColor.redColor()
         
         view.addSubview(searchTableView)
         
-        searchController.delegate = self
-        searchController.searchResultsUpdater = self
-        searchController.searchBar.delegate = self
-        searchController.dimsBackgroundDuringPresentation = false
         initCitiesFromJSON()
-        
     }
     
+    private func configureSearchController(){
+        let barFrame = CGRect(x: 0, y: 0, width: 400, height: 44)
+        searchController = CitySearchController(searchResultsController: nil,searchBarFrame: barFrame, searchBarTintColor: UIColor.purpleColor())
+        //        searchController.searchBar.sizeToFit()
+        searchController.dimsBackgroundDuringPresentation = false
+        searchController.searchDelegate = self
+        searchTableView.tableHeaderView = searchController.citySearchBar
+        
+    }
     override func loadView() {
         super.loadView()
         
@@ -90,7 +95,7 @@ class AddCityPageVC: UIViewController {
         UIView.animateWithDuration(0.4, delay: 0.03, options: [UIViewAnimationOptions.BeginFromCurrentState, UIViewAnimationOptions.CurveEaseInOut], animations: {[unowned self]() -> Void in
            
             }, completion: {[unowned self](finished) in
-                self.searchController.active = true
+                self.searchController.citySearchBar.becomeFirstResponder()
         })
         
     }
@@ -128,6 +133,7 @@ class AddCityPageVC: UIViewController {
         filteredCities = cities.filter({ ( city : String)-> Bool in
             return city.lowercaseString.containsString(searchText.lowercaseString)
         })
+    
         searchTableView.reloadData()
     }
 }
@@ -139,13 +145,13 @@ extension AddCityPageVC : UITableViewDelegate {
         if let cell = tableView.cellForRowAtIndexPath(indexPath) as? SearchCityTableViewCell {
             delegate?.selectedCityName(cityName: cell.cityNameLabel.text!)
         }
-        print("sellect")
     }
 }
 
 extension AddCityPageVC : UITableViewDataSource {
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if searchController.active && searchController.searchBar.text != "" {
+        
+        if searchController.citySearchBar.text != "" {
             return filteredCities.count
         }else{
             return cities.count
@@ -154,7 +160,7 @@ extension AddCityPageVC : UITableViewDataSource {
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("SearchCityCell", forIndexPath: indexPath) as! SearchCityTableViewCell
-        if searchController.active && searchController.searchBar.text != "" {
+        if searchController.citySearchBar.text != "" {
             cell.cityNameLabel.text = filteredCities[indexPath.row]
         }else{
             cell.cityNameLabel.text = cities[indexPath.row]
@@ -163,18 +169,8 @@ extension AddCityPageVC : UITableViewDataSource {
     }
 }
 
-extension AddCityPageVC : UISearchBarDelegate {
-    
-}
-
-extension AddCityPageVC : UISearchResultsUpdating {
-    func updateSearchResultsForSearchController(searchController: UISearchController) {
-        filterContentForSearchText(searchController.searchBar.text!)
-    }
-}
-
-extension AddCityPageVC : UISearchControllerDelegate {
-    func didPresentSearchController(searchController: UISearchController) {
-        searchController.searchBar.becomeFirstResponder()
+extension AddCityPageVC : CitySearchControllerDelegate {
+    func didChangeSearchTextInSearchBar(searchBar: CitySearchBar, searchText: String) {
+        filterContentForSearchText(searchBar.text!)
     }
 }
