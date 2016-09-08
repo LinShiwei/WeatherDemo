@@ -31,6 +31,7 @@ class AddCityPageVC: UIViewController {
     init(senderView : UITableViewCell,backgroundColor:UIColor){
         self.senderView = senderView
         self.maskView.backgroundColor = backgroundColor
+                
         rootViewController = UIApplication.sharedApplication().keyWindow!.rootViewController!
         
         if let controller = rootViewController as? MainViewController{
@@ -54,9 +55,7 @@ class AddCityPageVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        configureSearchController()
         
-        configureSearchTableView()
         
         initCitiesFromJSON()
     }
@@ -67,7 +66,7 @@ class AddCityPageVC: UIViewController {
         searchTableView.delegate = self
         searchTableView.dataSource  = self
         searchTableView.backgroundColor = UIColor.redColor()
-        
+        searchTableView.alpha = 0
         view.addSubview(searchTableView)
     }
     
@@ -76,28 +75,42 @@ class AddCityPageVC: UIViewController {
         //        searchController.searchBar.sizeToFit()
         searchController.dimsBackgroundDuringPresentation = false
         searchController.searchDelegate = self
-       
+        searchController.citySearchBar.alpha = 0
         view.addSubview(searchController.citySearchBar)
        
     }
-    override func loadView() {
-        super.loadView()
-        
+    
+    private func  configureMaskView(){
         maskView.frame = windowBounds
-        maskView.alpha = 0.5
+        maskView.alpha = 0.0
         let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(AddCityPageVC.tapToReturn(_:)))
         maskView.addGestureRecognizer(tapGestureRecognizer)
         view.insertSubview(maskView, atIndex: 0)
+    }
+    
+    override func loadView() {
+        super.loadView()
+        configureSearchController()
+        configureSearchTableView()
+        configureMaskView()
         
         animateEntry()
     }
     
     private func animateEntry(){
-        UIView.animateWithDuration(0.8, delay: 0.0, usingSpringWithDamping: 0.7, initialSpringVelocity: 0.6, options: [UIViewAnimationOptions.BeginFromCurrentState, UIViewAnimationOptions.CurveEaseInOut], animations: {[unowned self]() -> Void in
-            }, completion: nil)
+        UIView.animateWithDuration(0.6, delay: 0.0, options: [UIViewAnimationOptions.BeginFromCurrentState, UIViewAnimationOptions.CurveEaseInOut], animations: {[unowned self]() -> Void in
+            
+            self.searchController.citySearchBar.alpha = 1
+            self.searchTableView.alpha = 1
         
-        UIView.animateWithDuration(0.4, delay: 0.03, options: [UIViewAnimationOptions.BeginFromCurrentState, UIViewAnimationOptions.CurveEaseInOut], animations: {[unowned self]() -> Void in
-           
+            }, completion: {(finished) in
+                print("finishe")
+        })
+        
+        UIView.animateWithDuration(0.3, delay: 0.0, options: [UIViewAnimationOptions.BeginFromCurrentState, UIViewAnimationOptions.CurveEaseInOut], animations: {[unowned self]() -> Void in
+            
+            self.maskView.alpha = 0.5
+            
             }, completion: {[unowned self](finished) in
                 self.searchController.citySearchBar.becomeFirstResponder()
         })
@@ -105,12 +118,19 @@ class AddCityPageVC: UIViewController {
     }
     
     private func dismissViewController() {
-        searchController.active = false
         dispatch_async(dispatch_get_main_queue(), {
-            UIView.animateWithDuration(0.1){[unowned self]() in
-            }
-            UIView.animateWithDuration(0.8, delay: 0, usingSpringWithDamping: 0.7, initialSpringVelocity: 0.6, options: [UIViewAnimationOptions.BeginFromCurrentState, UIViewAnimationOptions.CurveEaseInOut], animations: {[unowned self]() in
-                }, completion: {(finished) in
+            UIView.animateWithDuration(0.3, delay: 0.0, options: [UIViewAnimationOptions.BeginFromCurrentState, UIViewAnimationOptions.CurveEaseInOut], animations: {[unowned self]() -> Void in
+                
+                self.searchTableView.alpha = 0.0
+                self.searchController.citySearchBar.alpha = 0.0
+                
+                }, completion: {[unowned self](finished) in
+                    self.searchController.citySearchBar.resignFirstResponder()
+
+            })
+            UIView.animateWithDuration(0.5, delay: 0, options: [UIViewAnimationOptions.BeginFromCurrentState, UIViewAnimationOptions.CurveEaseInOut], animations: {[unowned self]() in
+                self.maskView.alpha = 0.0
+                }, completion: {[unowned self](finished) in
                     self.willMoveToParentViewController(nil)
                     self.view.removeFromSuperview()
                     self.removeFromParentViewController()
