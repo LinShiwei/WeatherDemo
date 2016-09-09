@@ -27,7 +27,7 @@ class MainViewController: UIViewController {
         
         let defaults = NSUserDefaults.standardUserDefaults()
         citiesInTable = defaults.objectForKey("cities") as? [String] ?? ["London","Quanzhou"]
-               
+        
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -38,6 +38,7 @@ class MainViewController: UIViewController {
         super.didReceiveMemoryWarning()
     }
     
+   
     
     func fetchDataWithCityName(cityName:String) {
         guard cityName != "" else {

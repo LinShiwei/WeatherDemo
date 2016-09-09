@@ -8,6 +8,7 @@
 
 import UIKit
 import SwiftyJSON
+import CoreData
 
 protocol SelectCityForAddingDelegate: class {
     func selectedCityName(cityName _:String)
@@ -31,7 +32,7 @@ class AddCityPageVC: UIViewController {
     init(senderView : UITableViewCell,backgroundColor:UIColor){
         self.senderView = senderView
         self.maskView.backgroundColor = backgroundColor
-                
+        
         rootViewController = UIApplication.sharedApplication().keyWindow!.rootViewController!
         
         if let controller = rootViewController as? MainViewController{
@@ -53,11 +54,20 @@ class AddCityPageVC: UIViewController {
         didMoveToParentViewController(rootViewController)
     }
     
+    override func loadView() {
+        super.loadView()
+        configureSearchController()
+        configureSearchTableView()
+        configureMaskView()
+        
+        animateEntry()
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         
-        initCitiesFromJSON()
+        initCities()
     }
     
     private func configureSearchTableView(){
@@ -86,15 +96,6 @@ class AddCityPageVC: UIViewController {
         let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(AddCityPageVC.tapToReturn(_:)))
         maskView.addGestureRecognizer(tapGestureRecognizer)
         view.insertSubview(maskView, atIndex: 0)
-    }
-    
-    override func loadView() {
-        super.loadView()
-        configureSearchController()
-        configureSearchTableView()
-        configureMaskView()
-        
-        animateEntry()
     }
     
     private func animateEntry(){
@@ -142,6 +143,36 @@ class AddCityPageVC: UIViewController {
         dismissViewController()
     }
     
+
+    private func initCities(){
+    //Here provide two ways to initCities. Choose one of them and disable the other one.
+        initCitiesFromCoreData()
+        
+//        initCitiesFromJSON()
+    }
+    
+    private func initCitiesFromCoreData(){
+        var objects = [NSManagedObject]()
+        let managedContext = getManagedContext()
+        let fetchRequest = NSFetchRequest(entityName: "City")
+        fetchRequest.sortDescriptors = [NSSortDescriptor(key: "name", ascending: true)]
+        do {
+            objects = try managedContext.executeFetchRequest(fetchRequest) as! [NSManagedObject]
+        } catch let error as NSError {
+            print("Could not fetch \(error), \(error.userInfo)")
+        }
+        if objects.count > 0 {
+            for object in objects {
+                cities.append(object.valueForKey("name") as! String)
+            }
+        }else{
+            initCitiesFromJSON()
+            saveCitiesInCoreData(withManagedContext: managedContext)
+        }
+        
+        
+    }
+    
     private func initCitiesFromJSON(){
         if let path = NSBundle.mainBundle().pathForResource("CN_city_sorted", ofType: "txt"),let stringData = try? String(contentsOfFile: path, usedEncoding: nil){
             let lines = stringData.componentsSeparatedByString("\n")
@@ -153,12 +184,35 @@ class AddCityPageVC: UIViewController {
         }
     }
     
+    private func saveCitiesInCoreData(withManagedContext managedContext:NSManagedObjectContext){
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)){[unowned self] in
+            let entity = NSEntityDescription.entityForName("City", inManagedObjectContext:managedContext)
+            for city in self.cities {
+                let cityObject = NSManagedObject(entity: entity!, insertIntoManagedObjectContext: managedContext)
+                cityObject.setValue(city, forKey: "name")
+                
+            }
+            do {
+                try managedContext.save()
+            }
+            catch let error as NSError {
+                print("Could not save \(error), \(error.userInfo)")
+            }
+        }
+    }
+    
     private func filterContentForSearchText(searchText: String){
         filteredCities = cities.filter({ ( city : String)-> Bool in
             return city.lowercaseString.containsString(searchText.lowercaseString)
         })
     
         searchTableView.reloadData()
+    }
+    
+    //MARK: Helper
+    func getManagedContext()->NSManagedObjectContext{
+        let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+        return appDelegate.managedObjectContext
     }
 }
 
@@ -198,3 +252,4 @@ extension AddCityPageVC : CitySearchControllerDelegate {
         filterContentForSearchText(searchBar.text!)
     }
 }
+
