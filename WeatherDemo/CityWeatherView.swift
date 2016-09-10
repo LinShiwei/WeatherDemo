@@ -17,7 +17,7 @@ struct Temperature {
 }
 
 class CityWeatherView: UIView {
-
+    //MARK: Property
     var mainWeatherInfoView : MainWeatherInfoView?
     var fiveDayInfoView : FiveDayInfoView?
 
@@ -98,16 +98,7 @@ class CityWeatherView: UIView {
             mainWeatherInfoView?.degree.text = tempString
         }
     }
-    
-    
-    func setCity(cityName:String){
-        
-    }
-    
-    override func awakeFromNib() {
-        
-    }
-    
+    //MARK: Life cycle
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         guard let mainView = NSBundle.mainBundle().loadNibNamed("MainWeatherInfoView", owner: self, options: nil).first as? MainWeatherInfoView else {return}

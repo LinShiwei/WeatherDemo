@@ -7,17 +7,18 @@
 //
 
 import UIKit
-
+//MARK: Protocol: CitySearchControllerDelegate
 protocol CitySearchControllerDelegate {
     func didChangeSearchTextInSearchBar(searchBar:CitySearchBar,searchText:String)
 }
 
 class CitySearchController: UISearchController {
-
+    //MARK: Property
     var citySearchBar : CitySearchBar!
     
     var searchDelegate : CitySearchControllerDelegate?
     
+    //MARK: Lift cycle
     override func viewDidLoad() {
         super.viewDidLoad()
     }
@@ -45,6 +46,7 @@ class CitySearchController: UISearchController {
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
     }
     
+    //MARK: Configure
     func configureSearchBar(barFrame: CGRect, bgColor: UIColor) {
         citySearchBar = CitySearchBar(frame:barFrame)
         
@@ -57,6 +59,7 @@ class CitySearchController: UISearchController {
     }
 }
 
+//MARK: UISearchBarDelegate
 extension CitySearchController : UISearchBarDelegate{
     func searchBar(searchBar: UISearchBar, textDidChange searchText: String) {
         guard let bar = searchBar as? CitySearchBar else {return}

@@ -12,7 +12,7 @@ import SwiftyJSON
 
 class MainViewController: UIViewController {
 
-    
+    //MARK: Property
     var citiesInTable = [String](){
         didSet{
             let defaults = NSUserDefaults.standardUserDefaults()
@@ -22,6 +22,8 @@ class MainViewController: UIViewController {
     
     @IBOutlet weak var cityWeatherView: CityWeatherView!
     @IBOutlet weak var cityListTable: CityListTableView!
+    
+    //MARK: Life cycle
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -39,7 +41,7 @@ class MainViewController: UIViewController {
     }
     
    
-    
+    // JSON Data
     func fetchDataWithCityName(cityName:String) {
         guard cityName != "" else {
             print("cityName is blank ")
@@ -70,6 +72,7 @@ class MainViewController: UIViewController {
     }
 }
 
+//MARK: UITableViewDataSource
 extension MainViewController:UITableViewDataSource{
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
@@ -90,6 +93,7 @@ extension MainViewController:UITableViewDataSource{
 
 }
 
+//MARK: UITableViewDelegate
 extension MainViewController:UITableViewDelegate {
     func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
         return cityListTableViewHeight
@@ -156,6 +160,7 @@ extension MainViewController:UITableViewDelegate {
     }
 }
 
+//MARK: SelectCityForAddingDelegate
 extension MainViewController: SelectCityForAddingDelegate{
     func selectedCityName(cityName cityName:String){
         for name in citiesInTable {

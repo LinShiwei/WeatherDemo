@@ -16,6 +16,7 @@ protocol SelectCityForAddingDelegate: class {
 
 class AddCityPageVC: UIViewController {
 
+    //MARK: Property
     var cities = [String]()
     var filteredCities = [String]()
     
@@ -28,7 +29,8 @@ class AddCityPageVC: UIViewController {
     var rootViewController : UIViewController!
 
     var delegate : SelectCityForAddingDelegate?
-    
+
+    //MARK: Life cycle
     init(senderView : UITableViewCell,backgroundColor:UIColor){
         self.senderView = senderView
         self.maskView.backgroundColor = backgroundColor
@@ -70,6 +72,15 @@ class AddCityPageVC: UIViewController {
         initCities()
     }
     
+    //MARK: Configure view & viewController
+    private func  configureMaskView(){
+        maskView.frame = windowBounds
+        maskView.alpha = 0.0
+        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(AddCityPageVC.tapToReturn(_:)))
+        maskView.addGestureRecognizer(tapGestureRecognizer)
+        view.insertSubview(maskView, atIndex: 0)
+    }
+    
     private func configureSearchTableView(){
         searchTableView.registerNib(UINib(nibName: "SearchCityTableViewCell", bundle: nil), forCellReuseIdentifier: "SearchCityCell")
         searchTableView.frame = searchTableViewFrame
@@ -89,15 +100,8 @@ class AddCityPageVC: UIViewController {
         view.addSubview(searchController.citySearchBar)
        
     }
-    
-    private func  configureMaskView(){
-        maskView.frame = windowBounds
-        maskView.alpha = 0.0
-        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(AddCityPageVC.tapToReturn(_:)))
-        maskView.addGestureRecognizer(tapGestureRecognizer)
-        view.insertSubview(maskView, atIndex: 0)
-    }
-    
+
+    //MARK: Animation
     private func animateEntry(){
         UIView.animateWithDuration(0.6, delay: 0.0, options: [UIViewAnimationOptions.BeginFromCurrentState, UIViewAnimationOptions.CurveEaseInOut], animations: {[unowned self]() -> Void in
             
@@ -138,16 +142,11 @@ class AddCityPageVC: UIViewController {
             })
         })
     }
-    
-    func tapToReturn(sender: UITapGestureRecognizer){
-        dismissViewController()
-    }
-    
 
+    //MARK: Data
     private func initCities(){
     //Here provide two ways to initCities. Choose one of them and disable the other one.
         initCitiesFromCoreData()
-        
 //        initCitiesFromJSON()
     }
     
@@ -169,8 +168,6 @@ class AddCityPageVC: UIViewController {
             initCitiesFromJSON()
             saveCitiesInCoreData(withManagedContext: managedContext)
         }
-        
-        
     }
     
     private func initCitiesFromJSON(){
@@ -210,12 +207,17 @@ class AddCityPageVC: UIViewController {
     }
     
     //MARK: Helper
+    func tapToReturn(sender: UITapGestureRecognizer){
+        dismissViewController()
+    }
+    
     func getManagedContext()->NSManagedObjectContext{
         let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
         return appDelegate.managedObjectContext
     }
 }
 
+//MARK: UITableViewDelegate
 extension AddCityPageVC : UITableViewDelegate {
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         guard rootViewController is MainViewController else { return }
@@ -226,6 +228,7 @@ extension AddCityPageVC : UITableViewDelegate {
     }
 }
 
+//MARK: UITabelViewDataSource
 extension AddCityPageVC : UITableViewDataSource {
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
@@ -247,6 +250,7 @@ extension AddCityPageVC : UITableViewDataSource {
     }
 }
 
+//MARK: CitySearchControllerDelegate
 extension AddCityPageVC : CitySearchControllerDelegate {
     func didChangeSearchTextInSearchBar(searchBar: CitySearchBar, searchText: String) {
         filterContentForSearchText(searchBar.text!)
