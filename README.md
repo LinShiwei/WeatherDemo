@@ -1,2 +1,25 @@
 # WeatherDemo
 A weather demo app
+
+## Feature
+
+- [x] Current Day and five days weather information.
+- [x] Searching and adding city.
+- [x] Include all cities in China.
+- [x] Being able to support cities all over the world.
+
+## Technique
+
+- JSON
+- NSBundle
+- CoreData
+- UITableView
+- Animation of UIView
+- UISearchBar & UISearchController
+
+
+## License
+
+[MIT License](/LICENSE).
+
+
