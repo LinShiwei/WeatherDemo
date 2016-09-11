@@ -8,6 +8,13 @@ A weather demo app
 - [x] Include all cities in China.
 - [x] Being able to support cities all over the world.
 
+## Framework & Library
+
+- Haneke
+- SwiftyJSON
+- CoreData
+- UIKit
+
 ## Technique
 
 - JSON
