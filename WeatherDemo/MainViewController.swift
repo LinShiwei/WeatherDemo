@@ -11,7 +11,7 @@ import Haneke
 import SwiftyJSON
 
 class MainViewController: UIViewController {
-
+    var test = 0
     //MARK: Property
     var citiesInTable = [String](){
         didSet{
@@ -29,7 +29,6 @@ class MainViewController: UIViewController {
         
         let defaults = NSUserDefaults.standardUserDefaults()
         citiesInTable = defaults.objectForKey("cities") as? [String] ?? ["London","Quanzhou"]
-        
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -42,7 +41,7 @@ class MainViewController: UIViewController {
     
    
     // JSON Data
-    func fetchDataWithCityName(cityName:String) {
+    private func fetchDataWithCityName(cityName:String) {
         guard cityName != "" else {
             print("cityName is blank ")
             return

@@ -24,6 +24,7 @@ class CityWeatherView: UIView {
     var weatherJsonData : JSON? {
         didSet{
             guard let data = weatherJsonData else {return}
+            print("getData")
             if let name = data["name"].string {
                 cityName = name
             }else{
@@ -53,6 +54,7 @@ class CityWeatherView: UIView {
     var fiveDayJsonData : JSON? {
         didSet{
             guard let data = fiveDayJsonData else {return}
+            print("getfiveData")
 
             if let list = data["list"].array {
                 assert(4*8...5*8 ~= list.count)
