@@ -6,44 +6,109 @@
 //  Copyright © 2016年 Linsw. All rights reserved.
 //
 
+
+import Quick
+import Nimble
+import SwiftyJSON
 import XCTest
 @testable import WeatherDemo
 
-class WeatherDemoTests: XCTestCase {
-    
-    
-    var fiveDayInfoView : FiveDayInfoView?
-    
-    override func setUp() {
-        super.setUp()
-        fiveDayInfoView = NSBundle.mainBundle().loadNibNamed("FiveDayInfoView", owner: self, options: nil).first as? FiveDayInfoView
+class WeatherDemoTests: QuickSpec{
+    override func spec() {
+        
+        
+        describe("MainViewController After init"){
+            var viewController: MainViewController!
+            var cityWeatherView: CityWeatherView!
+            var table: CityListTableView!
+            beforeEach{
+                let defaults = NSUserDefaults.standardUserDefaults()
+                defaults.removeObjectForKey("cities")
+                let storyboard = UIStoryboard(name: "Main", bundle: nil)
+                viewController = storyboard.instantiateViewControllerWithIdentifier("MainViewControllerID") as! MainViewController
+                let _ = viewController.view
+                table = viewController.cityListTable
+                cityWeatherView = viewController.cityWeatherView
+            }
+            it("notNil"){
+                expect(viewController).toNot(beNil())
+            }
+
+            it("citiesInTable originally contains two city"){
+                expect(viewController.citiesInTable.count) == 2
+            }
+            
+            it("userDefaults 'city' Key originally contains a 2-city array"){
+                let defaults = NSUserDefaults.standardUserDefaults()
+                let cityArray = defaults.objectForKey("cities") as! [String]
+                expect(cityArray.count).to(equal(2))
+            }
+            
+            describe("cityListTable"){
+                var cellCount = 0
+                beforeEach{
+                    cellCount = table.numberOfRowsInSection(0)
+                }
+                
+                it("notNil"){
+                    expect(table).toNot(beNil())
+
+                }
+                
+                it("CountOfCell is euqal to citiesInTable.count+1"){
+                    expect(cellCount).to(equal(viewController.citiesInTable.count+1))
+                }
+                
+                it("lastCell's label name is "+""){
+                    let lastCell = table.cellForRowAtIndexPath(NSIndexPath(forRow: cellCount-1,inSection: 0)) as! CityListTableCell
+                    expect(lastCell.nameLabel.text).to(equal("+"))
+                }
+            }
+//            
+//            describe("cityWeatherView"){
+//                
+//                fit("has original weather data"){
+//                    expect(cityWeatherView.weatherJsonData).toEventuallyNot(beNil(), timeout: 1, pollInterval: 1, description: nil)
+//                    expect(cityWeatherView.fiveDayJsonData).toNotEventually(beNil(), timeout: 1, pollInterval: 1, description: nil)
+//                }
+//                
+//            }
+//            
+            context("after select city To Add"){
+                var count = 0
+                var cellCount = 0
+                beforeEach{
+                    count = viewController.citiesInTable.count
+                    cellCount = table.numberOfRowsInSection(0)
+                    viewController.selectedCityName(cityName: "AvoidDuplicateName")
+                }
+                
+                it("Add a city to Array and TableView"){
+                    expect(viewController.citiesInTable.count).to(equal(count+1))
+                    expect(viewController.citiesInTable).to(contain("AvoidDuplicateName"))
+                    expect(table.numberOfRowsInSection(0)).to(equal(cellCount+1))
+                }
+                
+                it("zzzAvoidBug"){
+                    
+                }
+                
+            }
+            
+//            context("after select cell in tableView"){
+//                beforeEach{
+//                    table.selectRowAtIndexPath(<#T##indexPath: NSIndexPath?##NSIndexPath?#>, animated: <#T##Bool#>, scrollPosition: <#T##UITableViewScrollPosition#>)
+//                }
+//            }
+            
+
+        
+            
+        }
         
     }
-    
-    override func tearDown() {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
-        super.tearDown()
-    }
-    
-    func testFiveDayInfoView() {
-        XCTAssertNotNil(fiveDayInfoView)
-        XCTAssertEqual(fiveDayInfoView!.days.count, 5, "days.count NotEqual 5")
-        XCTAssertFalse(fiveDayInfoView!.autoresizesSubviews)
-        var dayNumberSum = 0
-        for cell in fiveDayInfoView!.days {
-            dayNumberSum += cell.dayNumber
-            XCTAssertEqual(cell.frame.size, dayInfoViewCellSize, "dayCellSize is not correct")
-            print(cell.frame)
-        }
-        XCTAssertEqual(dayNumberSum, 10, "Summary of dayNumbers is not 10")
-        
-    }
-    
-    func testPerformanceExample() {
-        // This is an example of a performance test case.
-        self.measureBlock {
-            // Put the code you want to measure the time of here.
-        }
-    }
-    
 }
+
+
+
+
