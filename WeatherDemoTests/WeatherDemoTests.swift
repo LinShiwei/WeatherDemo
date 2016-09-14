@@ -14,9 +14,7 @@ import XCTest
 @testable import WeatherDemo
 
 class WeatherDemoTests: QuickSpec{
-    override func spec() {
-        
-        
+    override func spec() {    
         describe("MainViewController After init"){
             var viewController: MainViewController!
             var cityWeatherView: CityWeatherView!
@@ -30,6 +28,7 @@ class WeatherDemoTests: QuickSpec{
                 table = viewController.cityListTable
                 cityWeatherView = viewController.cityWeatherView
             }
+            
             it("notNil"){
                 expect(viewController).toNot(beNil())
             }
@@ -55,26 +54,56 @@ class WeatherDemoTests: QuickSpec{
 
                 }
                 
-                it("CountOfCell is euqal to citiesInTable.count+1"){
-                    expect(cellCount).to(equal(viewController.citiesInTable.count+1))
-                }
-                
-                it("lastCell's label name is "+""){
+                it("contains two city cells and one add-city cell"){
+                    expect(cellCount).to(equal(3))
                     let lastCell = table.cellForRowAtIndexPath(NSIndexPath(forRow: cellCount-1,inSection: 0)) as! CityListTableCell
                     expect(lastCell.nameLabel.text).to(equal("+"))
                 }
+
+                it("has selected the first cell"){
+                    expect(table.cellForRowAtIndexPath(NSIndexPath(forRow: 0, inSection: 0))!.selected).to(beTrue())
+                }
+                
+                it("can init weather data when display the first cell"){
+                    viewController.tableView(table, willDisplayCell: table.cellForRowAtIndexPath(NSIndexPath(forRow: 0, inSection: 0))!, forRowAtIndexPath: NSIndexPath(forRow: 0, inSection: 0))
+                    expect(cityWeatherView.weatherJsonData).toEventuallyNot(beNil())
+                    expect(cityWeatherView.fiveDayJsonData).toEventuallyNot(beNil())
+                }
+                
+                it("can change weather data when select the city cell"){
+                    for row in 1...cellCount-1-1{
+                        let originWeatherJsonData = cityWeatherView.weatherJsonData
+                        let originFiveDayJsonData = cityWeatherView.fiveDayJsonData
+                        viewController.tableView(table, didSelectRowAtIndexPath: NSIndexPath(forRow: row, inSection: 0))
+                        expect(cityWeatherView.weatherJsonData).toEventuallyNot(equal(originWeatherJsonData))
+                        expect(cityWeatherView.fiveDayJsonData).toEventuallyNot(equal(originFiveDayJsonData))
+                    }
+                }
+                
+                it("can present AddCityPageVC when select the last cell '+'"){
+                    let row = cellCount-1
+                    expect(row).to(equal(2))
+                    viewController.tableView(table, willSelectRowAtIndexPath: NSIndexPath(forRow: row, inSection: 0))
+                    var addCityPageVC : UIViewController?
+                    for vc in UIApplication.sharedApplication().keyWindow!.rootViewController!.childViewControllers where vc is AddCityPageVC{
+                        addCityPageVC = vc
+                    }
+                    expect(addCityPageVC).toEventuallyNot(beNil())
+                }
+                
+                it("can delete city cells"){
+                    let arrayCount = viewController.citiesInTable.count
+                    viewController.tableView(table, commitEditingStyle: .Delete, forRowAtIndexPath: NSIndexPath(forRow: 0, inSection: 0))
+                    expect(viewController.citiesInTable.count).to(equal(arrayCount-1))
+                    expect(table.numberOfRowsInSection(0)).to(equal(cellCount-1))
+                }
+                
+                fit("can not delete the add-city cell"){
+                    expect(viewController.tableView(table,canEditRowAtIndexPath: NSIndexPath(forRow: cellCount-1, inSection: 0))).toNot(beTrue())
+                }
             }
-//            
-//            describe("cityWeatherView"){
-//                
-//                fit("has original weather data"){
-//                    expect(cityWeatherView.weatherJsonData).toEventuallyNot(beNil(), timeout: 1, pollInterval: 1, description: nil)
-//                    expect(cityWeatherView.fiveDayJsonData).toNotEventually(beNil(), timeout: 1, pollInterval: 1, description: nil)
-//                }
-//                
-//            }
-//            
-            context("after select city To Add"){
+
+            context("after select city for Adding"){
                 var count = 0
                 var cellCount = 0
                 beforeEach{
@@ -83,7 +112,7 @@ class WeatherDemoTests: QuickSpec{
                     viewController.selectedCityName(cityName: "AvoidDuplicateName")
                 }
                 
-                it("Add a city to Array and TableView"){
+                it("can add a city to Array and TableView"){
                     expect(viewController.citiesInTable.count).to(equal(count+1))
                     expect(viewController.citiesInTable).to(contain("AvoidDuplicateName"))
                     expect(table.numberOfRowsInSection(0)).to(equal(cellCount+1))
@@ -92,20 +121,8 @@ class WeatherDemoTests: QuickSpec{
                 it("zzzAvoidBug"){
                     
                 }
-                
             }
-            
-//            context("after select cell in tableView"){
-//                beforeEach{
-//                    table.selectRowAtIndexPath(<#T##indexPath: NSIndexPath?##NSIndexPath?#>, animated: <#T##Bool#>, scrollPosition: <#T##UITableViewScrollPosition#>)
-//                }
-//            }
-            
-
-        
-            
         }
-        
     }
 }
 
