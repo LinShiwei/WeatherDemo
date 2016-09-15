@@ -17,25 +17,25 @@ protocol SelectCityForAddingDelegate: class {
 class AddCityPageVC: UIViewController {
 
     //MARK: Property
-    var cities = [String]()
-    var filteredCities = [String]()
+    private var cities = [String]()
+    private var filteredCities = [String]()
     
-    var senderView : UITableViewCell
-    let maskView = UIView()
+    private var senderView : UITableViewCell?
+    private let maskView = UIView()
     
     let searchTableView = UITableView()
     var searchController : CitySearchController!
     
-    var rootViewController : UIViewController!
+    private var rootViewController : UIViewController!
 
     var delegate : SelectCityForAddingDelegate?
 
     //MARK: Life cycle
-    init(senderView : UITableViewCell,backgroundColor:UIColor){
+    init(senderView : UITableViewCell?, rootViewController rootVC:UIViewController, backgroundColor:UIColor){
         self.senderView = senderView
         self.maskView.backgroundColor = backgroundColor
         
-        rootViewController = UIApplication.sharedApplication().keyWindow!.rootViewController!
+        rootViewController = rootVC
         
         if let controller = rootViewController as? MainViewController{
             delegate = controller
@@ -67,8 +67,6 @@ class AddCityPageVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        
         initCities()
     }
     
@@ -104,16 +102,14 @@ class AddCityPageVC: UIViewController {
     //MARK: Animation
     private func animateEntry(){
         UIView.animateWithDuration(0.6, delay: 0.0, options: [UIViewAnimationOptions.BeginFromCurrentState, UIViewAnimationOptions.CurveEaseInOut], animations: {[unowned self]() -> Void in
-            
             self.searchController.citySearchBar.alpha = 1
             self.searchTableView.alpha = 1
         
             }, completion: {(finished) in
-                print("finishe")
+                print("AniateEntry finished")
         })
         
         UIView.animateWithDuration(0.3, delay: 0.0, options: [UIViewAnimationOptions.BeginFromCurrentState, UIViewAnimationOptions.CurveEaseInOut], animations: {[unowned self]() -> Void in
-            
             self.maskView.alpha = 0.5
             
             }, completion: {[unowned self](finished) in
@@ -131,7 +127,6 @@ class AddCityPageVC: UIViewController {
                 
                 }, completion: {[unowned self](finished) in
                     self.searchController.citySearchBar.resignFirstResponder()
-
             })
             UIView.animateWithDuration(0.5, delay: 0, options: [UIViewAnimationOptions.BeginFromCurrentState, UIViewAnimationOptions.CurveEaseInOut], animations: {[unowned self]() in
                 self.maskView.alpha = 0.0
@@ -253,7 +248,7 @@ extension AddCityPageVC : UITableViewDataSource {
 //MARK: CitySearchControllerDelegate
 extension AddCityPageVC : CitySearchControllerDelegate {
     func didChangeSearchTextInSearchBar(searchBar: CitySearchBar, searchText: String) {
-        filterContentForSearchText(searchBar.text!)
+        filterContentForSearchText(searchText)
     }
 }
 
