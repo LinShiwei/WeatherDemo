@@ -1,5 +1,5 @@
 //
-//  WeatherDemoTests.swift
+//  MainViewControllerTests.swift
 //  WeatherDemoTests
 //
 //  Created by Linsw on 16/8/4.
@@ -10,12 +10,11 @@
 import Quick
 import Nimble
 import SwiftyJSON
-import XCTest
 @testable import WeatherDemo
 
-class WeatherDemoTests: QuickSpec{
+class MainViewControllerTests: QuickSpec{
     override func spec() {    
-        describe("MainViewController After init"){
+        describe("After init"){
             var viewController: MainViewController!
             var cityWeatherView: CityWeatherView!
             var table: CityListTableView!
@@ -85,7 +84,7 @@ class WeatherDemoTests: QuickSpec{
                     expect(row).to(equal(2))
                     viewController.tableView(table, willSelectRowAtIndexPath: NSIndexPath(forRow: row, inSection: 0))
                     var addCityPageVC : UIViewController?
-                    for vc in UIApplication.sharedApplication().keyWindow!.rootViewController!.childViewControllers where vc is AddCityPageVC{
+                    for vc in viewController.childViewControllers where vc is AddCityPageVC{
                         addCityPageVC = vc
                     }
                     expect(addCityPageVC).toEventuallyNot(beNil())
@@ -98,7 +97,7 @@ class WeatherDemoTests: QuickSpec{
                     expect(table.numberOfRowsInSection(0)).to(equal(cellCount-1))
                 }
                 
-                fit("can not delete the add-city cell"){
+                it("can not delete the add-city cell"){
                     expect(viewController.tableView(table,canEditRowAtIndexPath: NSIndexPath(forRow: cellCount-1, inSection: 0))).toNot(beTrue())
                 }
             }
