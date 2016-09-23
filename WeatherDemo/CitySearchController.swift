@@ -9,7 +9,7 @@
 import UIKit
 //MARK: Protocol: CitySearchControllerDelegate
 protocol CitySearchControllerDelegate {
-    func didChangeSearchTextInSearchBar(searchBar:CitySearchBar,searchText:String)
+    func didChangeSearchTextInSearchBar(_ searchBar:CitySearchBar,searchText:String)
 }
 
 class CitySearchController: UISearchController {
@@ -42,12 +42,12 @@ class CitySearchController: UISearchController {
         super.init(coder: aDecoder)
     }
     
-    override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: NSBundle?) {
+    override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
     }
     
     //MARK: Configure
-    func configureSearchBar(barFrame: CGRect, bgColor: UIColor) {
+    func configureSearchBar(_ barFrame: CGRect, bgColor: UIColor) {
         citySearchBar = CitySearchBar(frame:barFrame)
         
         citySearchBar.barTintColor = bgColor
@@ -61,7 +61,7 @@ class CitySearchController: UISearchController {
 
 //MARK: UISearchBarDelegate
 extension CitySearchController : UISearchBarDelegate{
-    func searchBar(searchBar: UISearchBar, textDidChange searchText: String) {
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         guard let bar = searchBar as? CitySearchBar else {return}
         searchDelegate?.didChangeSearchTextInSearchBar(bar, searchText: searchText)
     }

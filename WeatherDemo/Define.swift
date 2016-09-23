@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 //MARK: APP constant setting
-let windowBounds = UIScreen.mainScreen().bounds
+let windowBounds = UIScreen.main.bounds
 
 
 let cityListTableViewWidth : CGFloat = 150 //This property MUST set in Main.stroyboard

@@ -17,16 +17,16 @@ protocol SelectCityForAddingDelegate: class {
 class AddCityPageVC: UIViewController {
 
     //MARK: Property
-    private var cities = [String]()
-    private var filteredCities = [String]()
+    fileprivate var cities = [String]()
+    fileprivate var filteredCities = [String]()
     
-    private var senderView : UITableViewCell?
-    private let maskView = UIView()
+    fileprivate var senderView : UITableViewCell?
+    fileprivate let maskView = UIView()
     
     let searchTableView = UITableView()
     var searchController : CitySearchController!
     
-    private var rootViewController : UIViewController!
+    fileprivate var rootViewController : UIViewController!
 
     var delegate : SelectCityForAddingDelegate?
 
@@ -50,10 +50,10 @@ class AddCityPageVC: UIViewController {
     }
     
     func presentFromRootViewController() {
-        willMoveToParentViewController(rootViewController)
+        willMove(toParentViewController: rootViewController)
         rootViewController.view.addSubview(view)
         rootViewController.addChildViewController(self)
-        didMoveToParentViewController(rootViewController)
+        didMove(toParentViewController: rootViewController)
     }
     
     override func loadView() {
@@ -71,26 +71,26 @@ class AddCityPageVC: UIViewController {
     }
     
     //MARK: Configure view & viewController
-    private func  configureMaskView(){
+    fileprivate func  configureMaskView(){
         maskView.frame = windowBounds
         maskView.alpha = 0.0
         let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(AddCityPageVC.tapToReturn(_:)))
         maskView.addGestureRecognizer(tapGestureRecognizer)
-        view.insertSubview(maskView, atIndex: 0)
+        view.insertSubview(maskView, at: 0)
     }
     
-    private func configureSearchTableView(){
-        searchTableView.registerNib(UINib(nibName: "SearchCityTableViewCell", bundle: nil), forCellReuseIdentifier: "SearchCityCell")
+    fileprivate func configureSearchTableView(){
+        searchTableView.register(UINib(nibName: "SearchCityTableViewCell", bundle: nil), forCellReuseIdentifier: "SearchCityCell")
         searchTableView.frame = searchTableViewFrame
         searchTableView.delegate = self
         searchTableView.dataSource  = self
-        searchTableView.backgroundColor = UIColor.redColor()
+        searchTableView.backgroundColor = UIColor.red
         searchTableView.alpha = 0
         view.addSubview(searchTableView)
     }
     
-    private func configureSearchController(){
-        searchController = CitySearchController(searchResultsController: nil,searchBarFrame: searchControllerFrame, searchBarTintColor: UIColor.purpleColor())
+    fileprivate func configureSearchController(){
+        searchController = CitySearchController(searchResultsController: nil,searchBarFrame: searchControllerFrame, searchBarTintColor: UIColor.purple)
         //        searchController.searchBar.sizeToFit()
         searchController.dimsBackgroundDuringPresentation = false
         searchController.searchDelegate = self
@@ -101,7 +101,7 @@ class AddCityPageVC: UIViewController {
 
     //MARK: Animation
     private func animateEntry(){
-        UIView.animateWithDuration(0.6, delay: 0.0, options: [UIViewAnimationOptions.BeginFromCurrentState, UIViewAnimationOptions.CurveEaseInOut], animations: {[unowned self]() -> Void in
+        UIView.animate(withDuration: 0.6, delay: 0.0, options: [UIViewAnimationOptions.beginFromCurrentState, UIViewAnimationOptions.curveEaseInOut], animations: {[unowned self]() -> Void in
             self.searchController.citySearchBar.alpha = 1
             self.searchTableView.alpha = 1
         
@@ -109,7 +109,7 @@ class AddCityPageVC: UIViewController {
                 print("AniateEntry finished")
         })
         
-        UIView.animateWithDuration(0.3, delay: 0.0, options: [UIViewAnimationOptions.BeginFromCurrentState, UIViewAnimationOptions.CurveEaseInOut], animations: {[unowned self]() -> Void in
+        UIView.animate(withDuration: 0.3, delay: 0.0, options: [UIViewAnimationOptions.beginFromCurrentState, UIViewAnimationOptions.curveEaseInOut], animations: {[unowned self]() -> Void in
             self.maskView.alpha = 0.5
             
             }, completion: {[unowned self](finished) in
@@ -118,9 +118,9 @@ class AddCityPageVC: UIViewController {
         
     }
     
-    private func dismissViewController() {
-        dispatch_async(dispatch_get_main_queue(), {
-            UIView.animateWithDuration(0.3, delay: 0.0, options: [UIViewAnimationOptions.BeginFromCurrentState, UIViewAnimationOptions.CurveEaseInOut], animations: {[unowned self]() -> Void in
+    fileprivate func dismissViewController() {
+        DispatchQueue.main.async(execute: {
+            UIView.animate(withDuration: 0.3, delay: 0.0, options: UIViewAnimationOptions.beginFromCurrentState, animations: {[unowned self]() -> Void in
                 
                 self.searchTableView.alpha = 0.0
                 self.searchController.citySearchBar.alpha = 0.0
@@ -128,10 +128,10 @@ class AddCityPageVC: UIViewController {
                 }, completion: {[unowned self](finished) in
                     self.searchController.citySearchBar.resignFirstResponder()
             })
-            UIView.animateWithDuration(0.5, delay: 0, options: [UIViewAnimationOptions.BeginFromCurrentState, UIViewAnimationOptions.CurveEaseInOut], animations: {[unowned self]() in
+            UIView.animate(withDuration: 0.5, delay: 0, options: UIViewAnimationOptions.beginFromCurrentState, animations: {[unowned self]() in
                 self.maskView.alpha = 0.0
                 }, completion: {[unowned self](finished) in
-                    self.willMoveToParentViewController(nil)
+                    self.willMove(toParentViewController: nil)
                     self.view.removeFromSuperview()
                     self.removeFromParentViewController()
             })
@@ -139,48 +139,50 @@ class AddCityPageVC: UIViewController {
     }
 
     //MARK: Data
-    private func initCities(){
+    fileprivate func initCities(){
     //Here provide two ways to initCities. Choose one of them and disable the other one.
-        initCitiesFromCoreData()
-//        initCitiesFromJSON()
+//        initCitiesFromCoreData()
+        initCitiesFromJSON()
     }
     
-    private func initCitiesFromCoreData(){
-        var objects = [NSManagedObject]()
-        let managedContext = getManagedContext()
-        let fetchRequest = NSFetchRequest(entityName: "City")
-        fetchRequest.sortDescriptors = [NSSortDescriptor(key: "name", ascending: true)]
-        do {
-            objects = try managedContext.executeFetchRequest(fetchRequest) as! [NSManagedObject]
-        } catch let error as NSError {
-            print("Could not fetch \(error), \(error.userInfo)")
-        }
-        if objects.count > 0 {
-            for object in objects {
-                cities.append(object.valueForKey("name") as! String)
-            }
-        }else{
-            initCitiesFromJSON()
-            saveCitiesInCoreData(withManagedContext: managedContext)
-        }
-    }
-    
-    private func initCitiesFromJSON(){
-        if let path = NSBundle.mainBundle().pathForResource("CN_city_sorted", ofType: "txt"),let stringData = try? String(contentsOfFile: path, usedEncoding: nil){
-            let lines = stringData.componentsSeparatedByString("\n")
+//    fileprivate func initCitiesFromCoreData(){
+//        var objects = [NSManagedObject]()
+//        let managedContext = getManagedContext()
+//        let fetchRequest = NSFetchRequest(entityName: "City")
+//        fetchRequest.sortDescriptors = [NSSortDescriptor(key: "name", ascending: true)]
+//        do {
+//            objects = try managedContext.fetch(fetchRequest) as! [NSManagedObject]
+//        } catch let error as NSError {
+//            print("Could not fetch \(error), \(error.userInfo)")
+//        }
+//        if objects.count > 0 {
+//            for object in objects {
+//                cities.append(object.value(forKey: "name") as! String)
+//            }
+//        }else{
+//            initCitiesFromJSON()
+//            saveCitiesInCoreData(withManagedContext: managedContext)
+//        }
+//    }
+//    
+    fileprivate func initCitiesFromJSON(){
+        if let path = Bundle.main.path(forResource: "CN_city_sorted", ofType: "txt"),let stringData = try? String(contentsOfFile: path){
+            let lines = stringData.components(separatedBy: "\n")
             for line in lines {
-                if let dataFromString = line.dataUsingEncoding(NSUTF8StringEncoding, allowLossyConversion: false),let cityName = JSON(data:dataFromString)["name"].string{
+                if let dataFromString = line.data(using: String.Encoding.utf8, allowLossyConversion: false),let cityName = JSON(data:dataFromString)["name"].string{
                     cities.append(cityName)
                 }
             }
         }
     }
     
-    private func saveCitiesInCoreData(withManagedContext managedContext:NSManagedObjectContext){
-        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)){[unowned self] in
-            let entity = NSEntityDescription.entityForName("City", inManagedObjectContext:managedContext)
+    fileprivate func saveCitiesInCoreData(withManagedContext managedContext:NSManagedObjectContext){
+        
+//      下面这行用 DispatchQueue.main() 还是 DispatchQueue.global()???
+        DispatchQueue.global().async{[unowned self] in
+            let entity = NSEntityDescription.entity(forEntityName: "City", in:managedContext)
             for city in self.cities {
-                let cityObject = NSManagedObject(entity: entity!, insertIntoManagedObjectContext: managedContext)
+                let cityObject = NSManagedObject(entity: entity!, insertInto: managedContext)
                 cityObject.setValue(city, forKey: "name")
                 
             }
@@ -193,31 +195,31 @@ class AddCityPageVC: UIViewController {
         }
     }
     
-    private func filterContentForSearchText(searchText: String){
+    fileprivate func filterContentForSearchText(_ searchText: String){
         filteredCities = cities.filter({ ( city : String)-> Bool in
-            return city.lowercaseString.containsString(searchText.lowercaseString)
+            return city.lowercased().contains(searchText.lowercased())
         })
     
         searchTableView.reloadData()
     }
     
     //MARK: Helper
-    func tapToReturn(sender: UITapGestureRecognizer){
+    func tapToReturn(_ sender: UITapGestureRecognizer){
         dismissViewController()
     }
     
     func getManagedContext()->NSManagedObjectContext{
-        let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
         return appDelegate.managedObjectContext
     }
 }
 
 //MARK: UITableViewDelegate
 extension AddCityPageVC : UITableViewDelegate {
-    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         guard rootViewController is MainViewController else { return }
 
-        if let cell = tableView.cellForRowAtIndexPath(indexPath) as? SearchCityTableViewCell {
+        if let cell = tableView.cellForRow(at: indexPath) as? SearchCityTableViewCell {
             delegate?.selectedCityName(cityName: cell.cityNameLabel.text!)
         }
     }
@@ -225,7 +227,7 @@ extension AddCityPageVC : UITableViewDelegate {
 
 //MARK: UITabelViewDataSource
 extension AddCityPageVC : UITableViewDataSource {
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
         if searchController.citySearchBar.text != "" {
             return filteredCities.count
@@ -234,12 +236,12 @@ extension AddCityPageVC : UITableViewDataSource {
         }
     }
     
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("SearchCityCell", forIndexPath: indexPath) as! SearchCityTableViewCell
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "SearchCityCell", for: indexPath) as! SearchCityTableViewCell
         if searchController.citySearchBar.text != "" {
-            cell.cityNameLabel.text = filteredCities[indexPath.row]
+            cell.cityNameLabel.text = filteredCities[(indexPath as NSIndexPath).row]
         }else{
-            cell.cityNameLabel.text = cities[indexPath.row]
+            cell.cityNameLabel.text = cities[(indexPath as NSIndexPath).row]
         }
         return cell
     }
@@ -247,7 +249,7 @@ extension AddCityPageVC : UITableViewDataSource {
 
 //MARK: CitySearchControllerDelegate
 extension AddCityPageVC : CitySearchControllerDelegate {
-    func didChangeSearchTextInSearchBar(searchBar: CitySearchBar, searchText: String) {
+    func didChangeSearchTextInSearchBar(_ searchBar: CitySearchBar, searchText: String) {
         filterContentForSearchText(searchText)
     }
 }

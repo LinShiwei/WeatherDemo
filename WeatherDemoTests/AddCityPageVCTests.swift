@@ -17,12 +17,12 @@ class AddCityPageVCTests: QuickSpec {
         var mainVC: MainViewController!
         
         beforeEach{
-            let defaults = NSUserDefaults.standardUserDefaults()
-            defaults.removeObjectForKey("cities")
+            let defaults = UserDefaults.standard
+            defaults.removeObject(forKey: "cities")
             let storyboard = UIStoryboard(name: "Main", bundle: nil)
-            mainVC = storyboard.instantiateViewControllerWithIdentifier("MainViewControllerID") as! MainViewController
+            mainVC = storyboard.instantiateViewController(withIdentifier: "MainViewControllerID") as! MainViewController
             let _ = mainVC.view
-            addCityPageVC = AddCityPageVC(senderView: nil, rootViewController: mainVC, backgroundColor: UIColor.whiteColor())
+            addCityPageVC = AddCityPageVC(senderView: nil, rootViewController: mainVC, backgroundColor: UIColor.white)
             addCityPageVC.presentFromRootViewController()
 
         }
@@ -57,28 +57,28 @@ class AddCityPageVCTests: QuickSpec {
                 }
                 
                 it("contains over 6000 city cells"){
-                    expect(searchTableView.numberOfRowsInSection(0)) > 6000
+                    expect(searchTableView.numberOfRows(inSection: 0)) > 6000
                 }
                 
                 it("can select cell to add city in mainViewController"){
-                    let _ = searchTableView.numberOfRowsInSection(0)
-                    let indexPath = NSIndexPath(forRow: 3, inSection: 0)
-                    let cell = searchTableView.cellForRowAtIndexPath(indexPath) as! SearchCityTableViewCell
+                    let _ = searchTableView.numberOfRows(inSection: 0)
+                    let indexPath = IndexPath(row: 3, section: 0)
+                    let cell = searchTableView.cellForRow(at: indexPath) as! SearchCityTableViewCell
                     let cityName = cell.cityNameLabel.text
-                    addCityPageVC.tableView(searchTableView, didSelectRowAtIndexPath: indexPath)
+                    addCityPageVC.tableView(searchTableView, didSelectRowAt: indexPath)
                     
                     expect(mainVC.citiesInTable).to(contain(cityName))
-                    expect(mainVC.citiesInTable.count).to(equal(mainVC.cityListTable.numberOfRowsInSection(0)-1))
+                    expect(mainVC.citiesInTable.count).to(equal(mainVC.cityListTable.numberOfRows(inSection: 0)-1))
                 }
                 
                 it("should change presented cell when search text changed"){
                     let bar = addCityPageVC.searchController.citySearchBar
-                    let previousCount = addCityPageVC.searchTableView.numberOfRowsInSection(0)
+                    let previousCount = addCityPageVC.searchTableView.numberOfRows(inSection: 0)
                     bar.text = "bei"
                     addCityPageVC.didChangeSearchTextInSearchBar(bar, searchText: "bei")
 //                    expect(addCityPageVC.searchTableView.numberOfRowsInSection(0)).toEventually(beLessThan(previousCount))
 
-                    expect(addCityPageVC.searchTableView.numberOfRowsInSection(0)) < previousCount
+                    expect(addCityPageVC.searchTableView.numberOfRows(inSection: 0)) < previousCount
                 }
                 
                 it("ZZZAvoidBUG"){}

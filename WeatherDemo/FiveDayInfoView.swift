@@ -21,7 +21,7 @@ class FiveDayInfoView: UIView {
 
         
         for day in 0...dayCount - 1 {
-            guard let viewFromNib = NSBundle.mainBundle().loadNibNamed("DayInfoViewCell", owner: self, options: nil).first as? DayInfoViewCell else {return}
+            guard let viewFromNib = Bundle.main.loadNibNamed("DayInfoViewCell", owner: self, options: nil)?.first as? DayInfoViewCell else {return}
             viewFromNib.dayNumber = day
             
             days.append(viewFromNib)
