@@ -24,7 +24,6 @@ class CityWeatherView: UIView {
     var weatherJsonData : JSON? {
         didSet{
             guard let data = weatherJsonData else {return}
-            print("getData")
             if let name = data["name"].string {
                 cityName = name
             }else{
@@ -39,7 +38,7 @@ class CityWeatherView: UIView {
             
             if let main = data["main"].dictionary {
 
-                if let temp = main["temp"]?.double, temp_max = main["temp_max"]?.double, temp_min = main["temp_min"]?.double {
+                if let temp = main["temp"]?.double, let temp_max = main["temp_max"]?.double, let temp_min = main["temp_min"]?.double {
                     temperature = Temperature(average: Int(temp-KOffSet), max: Int(temp_max-KOffSet), min: Int(temp_min-KOffSet))
                 }else{
                     print("[lsw] failed to get temperature data from json")
@@ -54,8 +53,6 @@ class CityWeatherView: UIView {
     var fiveDayJsonData : JSON? {
         didSet{
             guard let data = fiveDayJsonData else {return}
-            print("getfiveData")
-
             if let list = data["list"].array {
                 assert(4*8...5*8 ~= list.count)
                 for dayNumber in 0...4 {
@@ -68,10 +65,10 @@ class CityWeatherView: UIView {
                     
                     fiveDayInfoView!.days[dayNumber].weatherDescription = dayData["weather"][0]["description"].string!
                 }
-                let dataFormater = NSDateFormatter()
-                dataFormater.dateStyle = NSDateFormatterStyle.FullStyle
-                dataFormater.timeStyle = NSDateFormatterStyle.NoStyle
-                day = dataFormater.stringFromDate(NSDate())
+                let dataFormater = DateFormatter()
+                dataFormater.dateStyle = DateFormatter.Style.full
+                dataFormater.timeStyle = DateFormatter.Style.none
+                day = dataFormater.string(from: Date())
             }else{
                 print("[lsw] failed to get list data from json")
             }
@@ -103,11 +100,11 @@ class CityWeatherView: UIView {
     //MARK: Life cycle
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
-        guard let mainView = NSBundle.mainBundle().loadNibNamed("MainWeatherInfoView", owner: self, options: nil).first as? MainWeatherInfoView else {return}
+        guard let mainView = Bundle.main.loadNibNamed("MainWeatherInfoView", owner: self, options: nil)?.first as? MainWeatherInfoView else {return}
         mainWeatherInfoView = mainView
         addSubview(mainWeatherInfoView!)
         
-        guard let fiveDayView = NSBundle.mainBundle().loadNibNamed("FiveDayInfoView", owner: self, options: nil).first as? FiveDayInfoView else {return}
+        guard let fiveDayView = Bundle.main.loadNibNamed("FiveDayInfoView", owner: self, options: nil)?.first as? FiveDayInfoView else {return}
         fiveDayInfoView = fiveDayView
         addSubview(fiveDayInfoView!)
     }

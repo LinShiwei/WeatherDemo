@@ -20,11 +20,11 @@ class DayInfoViewCell: UIView {
         didSet {
             frame = CGRect(origin: CGPoint(x: dayInfoViewCellSize.width*CGFloat(dayNumber), y: 0), size: dayInfoViewCellSize)
             
-            let dataFormater = NSDateFormatter()
+            let dataFormater = DateFormatter()
             
-            dataFormater.dateStyle = NSDateFormatterStyle.FullStyle
-            dataFormater.timeStyle = NSDateFormatterStyle.NoStyle
-            dayLabel.text = dataFormater.stringFromDate(NSDate(timeIntervalSinceNow: Double(86400*dayNumber))).componentsSeparatedByString(", ").first
+            dataFormater.dateStyle = DateFormatter.Style.full
+            dataFormater.timeStyle = DateFormatter.Style.none
+            dayLabel.text = dataFormater.string(from: Date(timeIntervalSinceNow: Double(86400*dayNumber))).components(separatedBy: ", ").first
 
         }
     }

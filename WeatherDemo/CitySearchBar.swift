@@ -10,24 +10,24 @@ import UIKit
 
 class CitySearchBar: UISearchBar {
 
-    override func drawRect(rect: CGRect) {
+    override func draw(_ rect: CGRect) {
         if let index = indexOfSearchFieldInSubviews() {
             let searchField: UITextField = subviews[0].subviews[index] as! UITextField
             
-            searchField.frame = CGRectMake(5.0, 5.0, frame.size.width - 10.0, frame.size.height - 10.0)
+            searchField.frame = CGRect(x: 5.0, y: 5.0, width: frame.size.width - 10.0, height: frame.size.height - 10.0)
         
             searchField.backgroundColor = barTintColor
         }
         
-        super.drawRect(rect)
+        super.draw(rect)
     }
     
     override init(frame: CGRect) {
         super.init(frame: frame)
         self.frame = frame
         
-        searchBarStyle = UISearchBarStyle.Prominent
-        translucent = false
+        searchBarStyle = UISearchBarStyle.prominent
+        isTranslucent = false
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -39,7 +39,7 @@ class CitySearchBar: UISearchBar {
         let searchBarView = subviews[0] 
         
         for i in 0 ..< searchBarView.subviews.count {
-            if searchBarView.subviews[i].isKindOfClass(UITextField) {
+            if searchBarView.subviews[i].isKind(of: UITextField.self) {
                 index = i
                 break
             }

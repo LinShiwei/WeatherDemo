@@ -17,7 +17,7 @@ class CityListTableCell: UITableViewCell {
         backgroundColor = UIColor(red: 1, green: 1, blue: 1, alpha: 0.5)
     }
 
-    override func setSelected(selected: Bool, animated: Bool) {
+    override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
 
         // Configure the view for the selected state

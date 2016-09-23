@@ -21,11 +21,14 @@
 		56432C1B1D7666EB00896035 /* CN_city_sorted.txt in Resources */ = {isa = PBXBuildFile; fileRef = 56432C1A1D7666EB00896035 /* CN_city_sorted.txt */; };
 		565A09C81D8196E70074D9F9 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 565A09C71D8196E70074D9F9 /* CoreData.framework */; };
 		565A09CB1D8197690074D9F9 /* CityList.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 565A09C91D8197690074D9F9 /* CityList.xcdatamodeld */; };
+		5663BAC21D89634D00E2568F /* CityWeatherViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5663BAC11D89634D00E2568F /* CityWeatherViewTests.swift */; };
 		566741DE1D869AF60064B88C /* Quick.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 566741DD1D869AF60064B88C /* Quick.framework */; };
 		566741E01D869AFB0064B88C /* Nimble.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 566741DF1D869AFB0064B88C /* Nimble.framework */; };
 		566741E21D869B670064B88C /* Quick.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 566741DD1D869AF60064B88C /* Quick.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		566741E31D869B6E0064B88C /* Nimble.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 566741DF1D869AFB0064B88C /* Nimble.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		569521D11D8972220027D835 /* AddCityPageVCTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 569521D01D8972220027D835 /* AddCityPageVCTests.swift */; };
 		5696E23B1D5476B00015CD29 /* MainWeatherInfoView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5696E23A1D5476B00015CD29 /* MainWeatherInfoView.xib */; };
+		56AE4E191D94C7DF00E673DA /* Alamofire.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 56AE4E181D94C7DF00E673DA /* Alamofire.framework */; };
 		56BF4C1C1D7D451E00180972 /* CityListTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56BF4C1B1D7D451E00180972 /* CityListTableView.swift */; };
 		56BF4C1F1D7D514D00180972 /* CitySearchController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56BF4C1E1D7D514D00180972 /* CitySearchController.swift */; };
 		56BF4C211D7D5DCB00180972 /* CitySearchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56BF4C201D7D5DCB00180972 /* CitySearchBar.swift */; };
@@ -34,9 +37,8 @@
 		56F75CE31D52ED8E00A6B0F9 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 56F75CE11D52ED8E00A6B0F9 /* Main.storyboard */; };
 		56F75CE51D52ED8E00A6B0F9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 56F75CE41D52ED8E00A6B0F9 /* Assets.xcassets */; };
 		56F75CE81D52ED8E00A6B0F9 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 56F75CE61D52ED8E00A6B0F9 /* LaunchScreen.storyboard */; };
-		56F75CF31D52ED8F00A6B0F9 /* WeatherDemoTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56F75CF21D52ED8F00A6B0F9 /* WeatherDemoTests.swift */; };
+		56F75CF31D52ED8F00A6B0F9 /* MainViewControllerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56F75CF21D52ED8F00A6B0F9 /* MainViewControllerTests.swift */; };
 		56F75CFE1D53109400A6B0F9 /* SwiftyJSON.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 56F75CFD1D53109400A6B0F9 /* SwiftyJSON.framework */; };
-		56F75D011D5316EE00A6B0F9 /* Haneke.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 56F75D001D5316EE00A6B0F9 /* Haneke.framework */; };
 		56F75D031D53187600A6B0F9 /* Define.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56F75D021D53187600A6B0F9 /* Define.swift */; };
 		56F75D051D533C6900A6B0F9 /* CityWeatherView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56F75D041D533C6900A6B0F9 /* CityWeatherView.swift */; };
 /* End PBXBuildFile section */
@@ -80,9 +82,12 @@
 		56432C1A1D7666EB00896035 /* CN_city_sorted.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = CN_city_sorted.txt; sourceTree = "<group>"; };
 		565A09C71D8196E70074D9F9 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		565A09CA1D8197690074D9F9 /* CityList.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = CityList.xcdatamodel; sourceTree = "<group>"; };
+		5663BAC11D89634D00E2568F /* CityWeatherViewTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CityWeatherViewTests.swift; sourceTree = "<group>"; };
 		566741DD1D869AF60064B88C /* Quick.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Quick.framework; path = Carthage/Build/iOS/Quick.framework; sourceTree = "<group>"; };
 		566741DF1D869AFB0064B88C /* Nimble.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Nimble.framework; path = Carthage/Build/iOS/Nimble.framework; sourceTree = "<group>"; };
+		569521D01D8972220027D835 /* AddCityPageVCTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddCityPageVCTests.swift; sourceTree = "<group>"; };
 		5696E23A1D5476B00015CD29 /* MainWeatherInfoView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MainWeatherInfoView.xib; sourceTree = "<group>"; };
+		56AE4E181D94C7DF00E673DA /* Alamofire.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Alamofire.framework; path = Carthage/Build/iOS/Alamofire.framework; sourceTree = "<group>"; };
 		56BF4C1B1D7D451E00180972 /* CityListTableView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CityListTableView.swift; sourceTree = "<group>"; };
 		56BF4C1E1D7D514D00180972 /* CitySearchController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CitySearchController.swift; sourceTree = "<group>"; };
 		56BF4C201D7D5DCB00180972 /* CitySearchBar.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CitySearchBar.swift; sourceTree = "<group>"; };
@@ -94,7 +99,7 @@
 		56F75CE71D52ED8E00A6B0F9 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		56F75CE91D52ED8E00A6B0F9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		56F75CEE1D52ED8F00A6B0F9 /* WeatherDemoTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = WeatherDemoTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		56F75CF21D52ED8F00A6B0F9 /* WeatherDemoTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherDemoTests.swift; sourceTree = "<group>"; };
+		56F75CF21D52ED8F00A6B0F9 /* MainViewControllerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewControllerTests.swift; sourceTree = "<group>"; };
 		56F75CF41D52ED8F00A6B0F9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		56F75CFD1D53109400A6B0F9 /* SwiftyJSON.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftyJSON.framework; path = Carthage/Build/iOS/SwiftyJSON.framework; sourceTree = "<group>"; };
 		56F75D001D5316EE00A6B0F9 /* Haneke.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Haneke.framework; path = Carthage/Build/iOS/Haneke.framework; sourceTree = "<group>"; };
@@ -109,7 +114,7 @@
 			files = (
 				565A09C81D8196E70074D9F9 /* CoreData.framework in Frameworks */,
 				56F75CFE1D53109400A6B0F9 /* SwiftyJSON.framework in Frameworks */,
-				56F75D011D5316EE00A6B0F9 /* Haneke.framework in Frameworks */,
+				56AE4E191D94C7DF00E673DA /* Alamofire.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -151,6 +156,14 @@
 			name = AddCityPage;
 			sourceTree = "<group>";
 		};
+		56AE4E171D94C7DE00E673DA /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				56AE4E181D94C7DF00E673DA /* Alamofire.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		56BF4C1D1D7D50D200180972 /* CityListTableView */ = {
 			isa = PBXGroup;
 			children = (
@@ -171,6 +184,7 @@
 				56F75D001D5316EE00A6B0F9 /* Haneke.framework */,
 				56F75CFD1D53109400A6B0F9 /* SwiftyJSON.framework */,
 				56F75CDB1D52ED8E00A6B0F9 /* Products */,
+				56AE4E171D94C7DE00E673DA /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -199,7 +213,9 @@
 		56F75CF11D52ED8F00A6B0F9 /* WeatherDemoTests */ = {
 			isa = PBXGroup;
 			children = (
-				56F75CF21D52ED8F00A6B0F9 /* WeatherDemoTests.swift */,
+				56F75CF21D52ED8F00A6B0F9 /* MainViewControllerTests.swift */,
+				5663BAC11D89634D00E2568F /* CityWeatherViewTests.swift */,
+				569521D01D8972220027D835 /* AddCityPageVCTests.swift */,
 				56F75CF41D52ED8F00A6B0F9 /* Info.plist */,
 			);
 			path = WeatherDemoTests;
@@ -268,16 +284,18 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0730;
-				LastUpgradeCheck = 0720;
+				LastUpgradeCheck = 0800;
 				ORGANIZATIONNAME = Linsw;
 				TargetAttributes = {
 					56F75CD91D52ED8E00A6B0F9 = {
 						CreatedOnToolsVersion = 7.2;
 						DevelopmentTeam = 4F6NMKB449;
+						LastSwiftMigration = 0800;
 					};
 					56F75CED1D52ED8F00A6B0F9 = {
 						CreatedOnToolsVersion = 7.2;
 						DevelopmentTeam = 4F6NMKB449;
+						LastSwiftMigration = 0800;
 						TestTargetID = 56F75CD91D52ED8E00A6B0F9;
 					};
 				};
@@ -336,7 +354,7 @@
 			);
 			inputPaths = (
 				"$(SRCROOT)/Carthage/Build/iOS/SwiftyJSON.framework",
-				"$(SRCROOT)/Carthage/Build/iOS/Haneke.framework",
+				"$(SRCROOT)/Carthage/Build/iOS/Alamofire.framework",
 			);
 			outputPaths = (
 			);
@@ -372,7 +390,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				56F75CF31D52ED8F00A6B0F9 /* WeatherDemoTests.swift in Sources */,
+				569521D11D8972220027D835 /* AddCityPageVCTests.swift in Sources */,
+				5663BAC21D89634D00E2568F /* CityWeatherViewTests.swift in Sources */,
+				56F75CF31D52ED8F00A6B0F9 /* MainViewControllerTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -419,8 +439,10 @@
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -464,8 +486,10 @@
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -484,6 +508,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
 				TARGETED_DEVICE_FAMILY = 2;
 				VALIDATE_PRODUCT = YES;
 			};
@@ -501,6 +526,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = lsw.self.WeatherDemo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
 		};
@@ -516,6 +542,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = lsw.self.WeatherDemo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
 		};
@@ -531,6 +558,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = lsw.self.WeatherDemoTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/WeatherDemo.app/WeatherDemo";
 			};
 			name = Debug;
@@ -547,6 +575,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = lsw.self.WeatherDemoTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/WeatherDemo.app/WeatherDemo";
 			};
 			name = Release;

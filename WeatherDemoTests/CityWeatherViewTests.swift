@@ -17,7 +17,7 @@ class CityWeatherViewTests: QuickSpec {
             var cityWeatherView: CityWeatherView!
             beforeEach{
                 let storyboard = UIStoryboard(name: "Main", bundle: nil)
-                let viewController = storyboard.instantiateViewControllerWithIdentifier("MainViewControllerID") as! MainViewController
+                let viewController = storyboard.instantiateViewController(withIdentifier: "MainViewControllerID") as! MainViewController
                 for view in viewController.view.subviews where view is CityWeatherView {
                     cityWeatherView = view as! CityWeatherView
                 }

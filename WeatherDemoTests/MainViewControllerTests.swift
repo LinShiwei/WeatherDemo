@@ -19,10 +19,10 @@ class MainViewControllerTests: QuickSpec{
             var cityWeatherView: CityWeatherView!
             var table: CityListTableView!
             beforeEach{
-                let defaults = NSUserDefaults.standardUserDefaults()
-                defaults.removeObjectForKey("cities")
+                let defaults = UserDefaults.standard
+                defaults.removeObject(forKey: "cities")
                 let storyboard = UIStoryboard(name: "Main", bundle: nil)
-                viewController = storyboard.instantiateViewControllerWithIdentifier("MainViewControllerID") as! MainViewController
+                viewController = storyboard.instantiateViewController(withIdentifier: "MainViewControllerID") as! MainViewController
                 let _ = viewController.view
                 table = viewController.cityListTable
                 cityWeatherView = viewController.cityWeatherView
@@ -37,15 +37,15 @@ class MainViewControllerTests: QuickSpec{
             }
             
             it("userDefaults 'city' Key originally contains a 2-city array"){
-                let defaults = NSUserDefaults.standardUserDefaults()
-                let cityArray = defaults.objectForKey("cities") as! [String]
+                let defaults = UserDefaults.standard
+                let cityArray = defaults.object(forKey: "cities") as! [String]
                 expect(cityArray.count).to(equal(2))
             }
             
             describe("cityListTable"){
                 var cellCount = 0
                 beforeEach{
-                    cellCount = table.numberOfRowsInSection(0)
+                    cellCount = table.numberOfRows(inSection: 0)
                 }
                 
                 it("notNil"){
@@ -55,16 +55,16 @@ class MainViewControllerTests: QuickSpec{
                 
                 it("contains two city cells and one add-city cell"){
                     expect(cellCount).to(equal(3))
-                    let lastCell = table.cellForRowAtIndexPath(NSIndexPath(forRow: cellCount-1,inSection: 0)) as! CityListTableCell
+                    let lastCell = table.cellForRow(at: IndexPath(row: cellCount-1,section: 0)) as! CityListTableCell
                     expect(lastCell.nameLabel.text).to(equal("+"))
                 }
 
                 it("has selected the first cell"){
-                    expect(table.cellForRowAtIndexPath(NSIndexPath(forRow: 0, inSection: 0))!.selected).to(beTrue())
+                    expect(table.cellForRow(at: IndexPath(row: 0, section: 0))!.isSelected).to(beTrue())
                 }
                 
                 it("can init weather data when display the first cell"){
-                    viewController.tableView(table, willDisplayCell: table.cellForRowAtIndexPath(NSIndexPath(forRow: 0, inSection: 0))!, forRowAtIndexPath: NSIndexPath(forRow: 0, inSection: 0))
+                    viewController.tableView(table, willDisplay: table.cellForRow(at: IndexPath(row: 0, section: 0))!, forRowAt: IndexPath(row: 0, section: 0))
                     expect(cityWeatherView.weatherJsonData).toEventuallyNot(beNil())
                     expect(cityWeatherView.fiveDayJsonData).toEventuallyNot(beNil())
                 }
@@ -73,7 +73,7 @@ class MainViewControllerTests: QuickSpec{
                     for row in 1...cellCount-1-1{
                         let originWeatherJsonData = cityWeatherView.weatherJsonData
                         let originFiveDayJsonData = cityWeatherView.fiveDayJsonData
-                        viewController.tableView(table, didSelectRowAtIndexPath: NSIndexPath(forRow: row, inSection: 0))
+                        viewController.tableView(table, didSelectRowAt: IndexPath(row: row, section: 0))
                         expect(cityWeatherView.weatherJsonData).toEventuallyNot(equal(originWeatherJsonData))
                         expect(cityWeatherView.fiveDayJsonData).toEventuallyNot(equal(originFiveDayJsonData))
                     }
@@ -82,7 +82,7 @@ class MainViewControllerTests: QuickSpec{
                 it("can present AddCityPageVC when select the last cell '+'"){
                     let row = cellCount-1
                     expect(row).to(equal(2))
-                    viewController.tableView(table, willSelectRowAtIndexPath: NSIndexPath(forRow: row, inSection: 0))
+                    viewController.tableView(table, willSelectRowAt: IndexPath(row: row, section: 0))
                     var addCityPageVC : UIViewController?
                     for vc in viewController.childViewControllers where vc is AddCityPageVC{
                         addCityPageVC = vc
@@ -92,13 +92,13 @@ class MainViewControllerTests: QuickSpec{
                 
                 it("can delete city cells"){
                     let arrayCount = viewController.citiesInTable.count
-                    viewController.tableView(table, commitEditingStyle: .Delete, forRowAtIndexPath: NSIndexPath(forRow: 0, inSection: 0))
+                    viewController.tableView(table, commit: .delete, forRowAt: IndexPath(row: 0, section: 0))
                     expect(viewController.citiesInTable.count).to(equal(arrayCount-1))
-                    expect(table.numberOfRowsInSection(0)).to(equal(cellCount-1))
+                    expect(table.numberOfRows(inSection: 0)).to(equal(cellCount-1))
                 }
                 
                 it("can not delete the add-city cell"){
-                    expect(viewController.tableView(table,canEditRowAtIndexPath: NSIndexPath(forRow: cellCount-1, inSection: 0))).toNot(beTrue())
+                    expect(viewController.tableView(table,canEditRowAt: IndexPath(row: cellCount-1, section: 0))).toNot(beTrue())
                 }
             }
 
@@ -107,14 +107,14 @@ class MainViewControllerTests: QuickSpec{
                 var cellCount = 0
                 beforeEach{
                     count = viewController.citiesInTable.count
-                    cellCount = table.numberOfRowsInSection(0)
+                    cellCount = table.numberOfRows(inSection: 0)
                     viewController.selectedCityName(cityName: "AvoidDuplicateName")
                 }
                 
                 it("can add a city to Array and TableView"){
                     expect(viewController.citiesInTable.count).to(equal(count+1))
                     expect(viewController.citiesInTable).to(contain("AvoidDuplicateName"))
-                    expect(table.numberOfRowsInSection(0)).to(equal(cellCount+1))
+                    expect(table.numberOfRows(inSection: 0)).to(equal(cellCount+1))
                 }
                 
                 it("zzzAvoidBug"){
