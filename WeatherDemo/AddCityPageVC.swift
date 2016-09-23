@@ -121,7 +121,6 @@ class AddCityPageVC: UIViewController {
     fileprivate func dismissViewController() {
         DispatchQueue.main.async(execute: {
             UIView.animate(withDuration: 0.3, delay: 0.0, options: UIViewAnimationOptions.beginFromCurrentState, animations: {[unowned self]() -> Void in
-                
                 self.searchTableView.alpha = 0.0
                 self.searchController.citySearchBar.alpha = 0.0
                 
@@ -141,30 +140,30 @@ class AddCityPageVC: UIViewController {
     //MARK: Data
     fileprivate func initCities(){
     //Here provide two ways to initCities. Choose one of them and disable the other one.
-//        initCitiesFromCoreData()
-        initCitiesFromJSON()
+        initCitiesFromCoreData()
+//        initCitiesFromJSON()
     }
     
-//    fileprivate func initCitiesFromCoreData(){
-//        var objects = [NSManagedObject]()
-//        let managedContext = getManagedContext()
-//        let fetchRequest = NSFetchRequest(entityName: "City")
-//        fetchRequest.sortDescriptors = [NSSortDescriptor(key: "name", ascending: true)]
-//        do {
-//            objects = try managedContext.fetch(fetchRequest) as! [NSManagedObject]
-//        } catch let error as NSError {
-//            print("Could not fetch \(error), \(error.userInfo)")
-//        }
-//        if objects.count > 0 {
-//            for object in objects {
-//                cities.append(object.value(forKey: "name") as! String)
-//            }
-//        }else{
-//            initCitiesFromJSON()
-//            saveCitiesInCoreData(withManagedContext: managedContext)
-//        }
-//    }
-//    
+    fileprivate func initCitiesFromCoreData(){
+        var objects = [NSManagedObject]()
+        let managedContext = getManagedContext()
+        let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: "City")
+        fetchRequest.sortDescriptors = [NSSortDescriptor(key: "name", ascending: true)]
+        do {
+            objects = try managedContext.fetch(fetchRequest) 
+        } catch let error as NSError {
+            print("Could not fetch \(error), \(error.userInfo)")
+        }
+        if objects.count > 0 {
+            for object in objects {
+                cities.append(object.value(forKey: "name") as! String)
+            }
+        }else{
+            initCitiesFromJSON()
+            saveCitiesInCoreData(withManagedContext: managedContext)
+        }
+    }
+    
     fileprivate func initCitiesFromJSON(){
         if let path = Bundle.main.path(forResource: "CN_city_sorted", ofType: "txt"),let stringData = try? String(contentsOfFile: path){
             let lines = stringData.components(separatedBy: "\n")
@@ -177,14 +176,12 @@ class AddCityPageVC: UIViewController {
     }
     
     fileprivate func saveCitiesInCoreData(withManagedContext managedContext:NSManagedObjectContext){
-        
 //      下面这行用 DispatchQueue.main() 还是 DispatchQueue.global()???
         DispatchQueue.global().async{[unowned self] in
             let entity = NSEntityDescription.entity(forEntityName: "City", in:managedContext)
             for city in self.cities {
                 let cityObject = NSManagedObject(entity: entity!, insertInto: managedContext)
                 cityObject.setValue(city, forKey: "name")
-                
             }
             do {
                 try managedContext.save()
