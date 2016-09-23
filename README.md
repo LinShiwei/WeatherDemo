@@ -10,10 +10,11 @@ A weather demo app
 
 ## Framework & Library
 
-- Haneke
+- Alamofire
 - SwiftyJSON
 - CoreData
 - UIKit
+- ~~Haneke~~
 
 ## Technique
 
